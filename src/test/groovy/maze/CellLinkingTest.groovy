@@ -34,4 +34,26 @@ class CellLinkingTest extends Specification {
         then:
         assert secondCell.linkedTo( cell )
     }
+
+    def "cells can be unlinked"() {
+        setup:
+        cell.link( secondCell )
+
+        when:
+        cell.unlink( secondCell )
+
+        then:
+        assert !cell.linkedTo( secondCell )
+    }
+
+    def "cell unlinking is bidirectional"() {
+        setup:
+        cell.link( secondCell )
+
+        when:
+        cell.unlink( secondCell )
+
+        then:
+        assert !secondCell.linkedTo( cell )
+    }
 }

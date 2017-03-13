@@ -24,5 +24,10 @@ class Cell {
         }
     }
 
-
+    def unlink( Cell cell, boolean bidirectional = true ) {
+        links.remove( cell )
+        if ( bidirectional ) {
+            cell.unlink( this, false )
+        }
+    }
 }
