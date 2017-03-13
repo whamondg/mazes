@@ -3,10 +3,15 @@ package maze
 import spock.lang.Specification
 
 class CellLinkingTest extends Specification {
-    def "cell links are initially empty"() {
-        setup:
-        def cell = new Cell( 1, 1 )
+    def cell
+    def secondCell
 
+    def setup() {
+        cell = new Cell( 1, 1 )
+        secondCell = new Cell( 1, 2 )
+    }
+
+    def "cell links are initially empty"() {
         when:
         def result = cell.links
 
@@ -14,20 +19,19 @@ class CellLinkingTest extends Specification {
         result.size() == 0
     }
 
-    def "cell link"() {
-        setup:
-        def firstCell = new Cell( firstCellRow, firstCellColumn )
-        def secondCell = new Cell( secondCellRow, secondCellColumn )
-
+    def "cells can be linked"() {
         when:
-        firstCell.link( secondCell )
+        cell.link( secondCell )
 
         then:
-        assert firstCell.linkedTo( secondCell )
+        assert cell.linkedTo( secondCell )
+    }
 
-        where:
-        firstCellRow | firstCellColumn | secondCellRow | secondCellColumn
-        1            | 2               | 2             | 1
+    def "cell links are bidirectional"() {
+        when:
+        cell.link( secondCell )
 
+        then:
+        assert secondCell.linkedTo( cell )
     }
 }
