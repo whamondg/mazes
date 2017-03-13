@@ -2,16 +2,38 @@ package maze
 
 import groovy.transform.ToString
 
-@ToString( includeNames = true, excludes = ['links'] )
+@ToString( includePackage = false, excludes = ['adjacentCells', 'links'] )
 class Cell {
     int row
     int column
-    Set links = []
+    Map<String, Cell> adjacentCells = [ : ]
+    Set links = [ ]
 
     Cell( int row, int column ) {
         this.row = row
         this.column = column
     }
+
+    void north( Cell cell ) {
+        adjacentCells.north = cell
+    }
+
+    void south( Cell cell ) {
+        adjacentCells.south = cell
+    }
+
+    void east( Cell cell ) {
+        adjacentCells.east = cell
+    }
+
+    void west( Cell cell ) {
+        adjacentCells.west = cell
+    }
+
+    Set neighbours() {
+        adjacentCells.values()
+    }
+
 
     boolean linkedTo( Cell cell ) {
         links.contains( cell )

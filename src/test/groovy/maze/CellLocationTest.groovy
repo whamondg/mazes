@@ -41,5 +41,5 @@ class CellLocationTest extends Specification {
         2   | 1
         2   | 2
     }
-    
+
 }
