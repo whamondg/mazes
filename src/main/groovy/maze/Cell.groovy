@@ -17,14 +17,18 @@ class Cell {
         links.containsKey( cell )
     }
 
-    def link( Cell cell, boolean bidirectional = true ) {
+    void link( Cell cell, boolean bidirectional = true ) {
         links[cell] = true
         if ( bidirectional ) {
             cell.link( this, false )
         }
     }
 
-    def unlink( Cell cell, boolean bidirectional = true ) {
+    Set links() {
+        links.keySet()
+    }
+
+    void unlink( Cell cell, boolean bidirectional = true ) {
         links.remove( cell )
         if ( bidirectional ) {
             cell.unlink( this, false )

@@ -35,6 +35,20 @@ class CellLinkingTest extends Specification {
         assert secondCell.linkedTo( cell )
     }
 
+    def "linked cells can be retrieved from a cell"() {
+        setup:
+        cell.link( secondCell )
+
+        when:
+        def result = cell.links()
+
+        then:
+        result.size() == 1
+
+        and:
+        assert result.contains( secondCell )
+    }
+
     def "cells can be unlinked"() {
         setup:
         cell.link( secondCell )
