@@ -6,7 +6,7 @@ import groovy.transform.ToString
 class Cell {
     int row
     int column
-    Map links = [ : ]
+    Set links = []
 
     Cell( int row, int column ) {
         this.row = row
@@ -14,18 +14,14 @@ class Cell {
     }
 
     boolean linkedTo( Cell cell ) {
-        links.containsKey( cell )
+        links.contains( cell )
     }
 
     void link( Cell cell, boolean bidirectional = true ) {
-        links[cell] = true
+        links << cell
         if ( bidirectional ) {
             cell.link( this, false )
         }
-    }
-
-    Set links() {
-        links.keySet()
     }
 
     void unlink( Cell cell, boolean bidirectional = true ) {

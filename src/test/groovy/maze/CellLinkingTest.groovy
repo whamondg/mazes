@@ -40,7 +40,7 @@ class CellLinkingTest extends Specification {
         cell.link( secondCell )
 
         when:
-        def result = cell.links()
+        def result = cell.links
 
         then:
         result.size() == 1
