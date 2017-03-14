@@ -3,7 +3,7 @@ package maze
 class Grid {
     int rows
     int columns
-    List gridRows = [ ]
+    List gridRows = []
 
     Grid( rows, columns ) {
         this.rows = rows
@@ -15,7 +15,7 @@ class Grid {
 
     List prepareGrid() {
         rows.times { row ->
-            gridRows << [ ]
+            gridRows << []
             columns.times { column ->
                 gridRows[row] << new Cell( row + 1, column + 1 )
             }
@@ -39,7 +39,7 @@ class Grid {
     }
 
     Cell cell( int row, int column ) {
-        if ( ! ((row >= 0) && (row < gridRows.size() - 1)) ) {
+        if ( !((row >= 0) && (row < gridRows.size() - 1)) ) {
             return null
         }
         if ( !(column >= 0) && (column < gridRows[row].size() - 1) ) {

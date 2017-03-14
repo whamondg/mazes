@@ -14,7 +14,7 @@ class GridTest extends Specification {
         grid.rows == rows
 
         where:
-        rows << [ 1, 10, 100 ]
+        rows << [1, 10, 100]
     }
 
     def "a grid knows the number of columns it has"() {
@@ -26,7 +26,7 @@ class GridTest extends Specification {
 
 
         where:
-        columns << [ 1, 10, 100 ]
+        columns << [1, 10, 100]
     }
 
     @Unroll
@@ -53,7 +53,7 @@ class GridTest extends Specification {
         def grid = new Grid( 3, 3 )
 
         when:
-        def cell = grid.cell( row -1, column -1 )
+        def cell = grid.cell( row - 1, column - 1 )
 
         then:
         neighbours.each { neighbour, coordinates ->
@@ -62,7 +62,7 @@ class GridTest extends Specification {
 
         where:
         row | column | neighbours
-        1   | 1      | [ 'east': [ 1, 2 ] ]
+        1   | 1      | ['east': [1, 2]]
 
 
     }
