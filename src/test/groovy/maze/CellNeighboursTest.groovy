@@ -13,16 +13,16 @@ class CellNeighboursTest extends Specification {
     def "cell neighbours correct when north #north south #south east #east west #west"() {
         setup:
         if ( north ) {
-            cell.north( north )
+            cell.north = north
         }
         if ( south ) {
-            cell.south( south )
+            cell.south = south
         }
         if ( east ) {
-            cell.east( east )
+            cell.east = east
         }
         if ( west ) {
-            cell.west( west )
+            cell.west = west
         }
 
         when:

@@ -1,12 +1,18 @@
 package maze
 
+import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
-@ToString( includePackage = false, excludes = ['adjacentCells', 'links'] )
+@ToString( includes = ['row', 'column'] )
+@EqualsAndHashCode( includes = ['row', 'column'] )
 class Cell {
     int row
     int column
-    Map<String, Cell> adjacentCells = [ : ]
+    Cell north
+    Cell south
+    Cell east
+    Cell west
+
     Set links = [ ]
 
     Cell( int row, int column ) {
@@ -14,24 +20,8 @@ class Cell {
         this.column = column
     }
 
-    void north( Cell cell ) {
-        adjacentCells.north = cell
-    }
-
-    void south( Cell cell ) {
-        adjacentCells.south = cell
-    }
-
-    void east( Cell cell ) {
-        adjacentCells.east = cell
-    }
-
-    void west( Cell cell ) {
-        adjacentCells.west = cell
-    }
-
     Set neighbours() {
-        adjacentCells.values()
+        [ north, south, east, west ].findAll { it != null }
     }
 
 
@@ -52,4 +42,6 @@ class Cell {
             cell.unlink( this, false )
         }
     }
+
+
 }
