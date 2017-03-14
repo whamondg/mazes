@@ -11,7 +11,6 @@ class Cell {
     Cell south
     Cell east
     Cell west
-
     int row
     int column
 
