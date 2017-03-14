@@ -6,14 +6,14 @@ import groovy.transform.ToString
 @ToString( includes = ['row', 'column'] )
 @EqualsAndHashCode( includes = ['row', 'column'] )
 class Cell {
-    int row
-    int column
+    Set links = []
     Cell north
     Cell south
     Cell east
     Cell west
 
-    Set links = [ ]
+    int row
+    int column
 
     Cell( int row, int column ) {
         this.row = row
@@ -21,7 +21,7 @@ class Cell {
     }
 
     Set neighbours() {
-        [ north, south, east, west ].findAll { it != null }
+        [north, south, east, west].findAll { it != null }
     }
 
 
@@ -42,6 +42,4 @@ class Cell {
             cell.unlink( this, false )
         }
     }
-
-
 }
