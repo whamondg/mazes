@@ -5,6 +5,7 @@ import spock.lang.Unroll
 
 class GridTest extends Specification {
     static final UNIMPORTANT = 1
+    static final LINE_END = System.getProperty( "line.separator" )
 
     def "a grid knows the number of rows it has"() {
         when:
@@ -72,5 +73,23 @@ class GridTest extends Specification {
         3   | 1      | ['north': [2, 1], 'south': null, 'east': [3, 2], 'west': null]
         3   | 2      | ['north': [2, 2], 'south': null, 'east': [3, 3], 'west': [3, 1]]
         3   | 3      | ['north': [2, 3], 'south': null, 'east': null, 'west': [3, 2]]
+    }
+
+    def "grid with no links can be output as a string"() {
+        setup:
+        def grid = new Grid( 3, 5 )
+        def expected = "+---+---+---+---+---+${LINE_END}" +
+                       "|   |   |   |   |   |${LINE_END}" +
+                       "+---+---+---+---+---+${LINE_END}" +
+                       "|   |   |   |   |   |${LINE_END}" +
+                       "+---+---+---+---+---+${LINE_END}" +
+                       "|   |   |   |   |   |${LINE_END}" +
+                       "+---+---+---+---+---+${LINE_END}"
+
+        when:
+        def result = grid.toString()
+
+        then:
+        result == expected
     }
 }

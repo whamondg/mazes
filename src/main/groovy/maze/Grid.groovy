@@ -50,4 +50,34 @@ class Grid {
 
         gridRows[row][column] as Cell
     }
+
+    static final String LINE_END = System.getProperty( "line.separator" )
+
+    String toString() {
+        def buffer = new StringBuffer()
+
+        def cellBody = '   '
+        def corner = '+'
+        def verticalEdge = '|'
+        def verticalLink = ' '
+        def horizontalEdge = '---'
+        def horizontalLink = '   '
+
+        buffer << corner << "${horizontalEdge}+" * columns << LINE_END
+
+        gridRows.each { row ->
+            def topBuffer = new StringBuffer(verticalEdge)
+            def bottomBuffer = new StringBuffer(corner)
+            row.each { cell ->
+                def eastBoundary = cell?.linkedTo(cell.east) ? verticalLink : verticalEdge
+                def southBoundary = cell?.linkedTo(cell.south) ? horizontalLink : horizontalEdge
+
+                topBuffer << cellBody << eastBoundary
+                bottomBuffer << southBoundary << corner
+            }
+            buffer << topBuffer + LINE_END
+            buffer << bottomBuffer + LINE_END
+        }
+        buffer.toString()
+    }
 }
