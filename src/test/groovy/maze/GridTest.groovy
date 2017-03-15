@@ -88,6 +88,7 @@ class GridTest extends Specification {
 
         when:
         def result = grid.toString()
+        println result
 
         then:
         result == expected

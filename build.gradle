@@ -1,6 +1,9 @@
 apply plugin: 'application'
 apply plugin: 'groovy'
 
+applicationName = 'maze'
+mainClassName = "App"
+
 repositories {
     jcenter()
 }
@@ -14,8 +17,14 @@ dependencies {
 
 test {
     testLogging {
+        showStandardStreams = true
         exceptionFormat = 'full'
         events "passed", "skipped", "failed"
     }
 }
 
+run {
+    if(project.hasProperty('args')){
+        args project.args.split('\\s')
+    }
+}
