@@ -51,6 +51,14 @@ class Grid {
         gridRows[row][column] as Cell
     }
 
+    boolean lastRow( int rowIdx ) {
+        rowIdx == rows - 1
+    }
+
+    boolean lastColumn( int colIdx ) {
+        colIdx == columns - 1
+    }
+
     static final String LINE_END = System.getProperty( "line.separator" )
 
     String toString() {
@@ -73,16 +81,20 @@ class Grid {
 
         gridRows.eachWithIndex { row, rowIdx ->
             def topBuffer = new StringBuffer( verticalEdge )
-            def bottomBuffer = new StringBuffer( rowIdx == rows - 1 ? bottomLeft : verticalEdge )
+            def cellBottomLeft = lastRow( rowIdx ) ? bottomLeft : verticalEdge
+
+            def bottomBuffer = new StringBuffer( cellBottomLeft )
             row.eachWithIndex { cell, cellIdx ->
                 def eastBoundary = cell?.linkedTo( cell.east ) ? verticalLink : verticalEdge
                 def southBoundary = cell?.linkedTo( cell.south ) ? horizontalLink : horizontalEdge
 
+                def cellBottomRight = ((lastRow( rowIdx ) && lastColumn( cellIdx )) ? bottomRight : (lastRow( rowIdx )) ? bottomJoint : (lastColumn( cellIdx )) ? verticalEdge : corner)
+
                 topBuffer << cellBody << eastBoundary
-                bottomBuffer << southBoundary << ((rowIdx == rows - 1 && cellIdx == columns - 1) ? bottomRight : (rowIdx == rows - 1) ? bottomJoint : verticalEdge)
+                bottomBuffer << southBoundary << cellBottomRight
             }
-            buffer << topBuffer + LINE_END
-            buffer << bottomBuffer + LINE_END
+            buffer << topBuffer << LINE_END
+            buffer << bottomBuffer << LINE_END
         }
         buffer.toString()
     }
