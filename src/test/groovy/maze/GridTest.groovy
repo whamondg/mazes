@@ -78,13 +78,13 @@ class GridTest extends Specification {
     def "grid with no links can be output as a string"() {
         setup:
         def grid = new Grid( 3, 5 )
-        def expected = "┏━━━╋━━━╋━━━╋━━━╋━━━┓${LINE_END}" +
+        def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${LINE_END}" +
                        "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
-                       "╋━━━╋━━━╋━━━╋━━━╋━━━╋${LINE_END}" +
+                       "┃━━━╋━━━╋━━━╋━━━╋━━━┃${LINE_END}" +
                        "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
-                       "╋━━━╋━━━╋━━━╋━━━╋━━━╋${LINE_END}" +
+                       "┃━━━╋━━━╋━━━╋━━━╋━━━┃${LINE_END}" +
                        "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
-                       "┗━━━╋━━━╋━━━╋━━━╋━━━┛${LINE_END}"
+                       "┗━━━┻━━━┻━━━┻━━━┻━━━┛${LINE_END}"
 
         when:
         def result = grid.toString()
