@@ -57,13 +57,13 @@ class Grid {
         def buffer = new StringBuffer()
 
         def cellBody = '   '
-        def corner = '+'
-        def verticalEdge = '|'
+        def corner = '╋'
+        def verticalEdge = '┃'
         def verticalLink = ' '
-        def horizontalEdge = '---'
+        def horizontalEdge = '━━━'
         def horizontalLink = '   '
 
-        buffer << corner << "${horizontalEdge}+" * columns << LINE_END
+        buffer << corner << "${horizontalEdge}$corner" * columns << LINE_END
 
         gridRows.each { row ->
             def topBuffer = new StringBuffer(verticalEdge)
