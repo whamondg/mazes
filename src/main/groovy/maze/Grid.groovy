@@ -68,6 +68,8 @@ class Grid {
         def bottomLeft = '┗'
         def bottomJoint = '┻'
         def bottomRight = '┛'
+        def leftjoint = '┣'
+        def rightJoint = '┫'
         def cellBody = '   '
         def corner = '╋'
         def verticalEdge = '┃'
@@ -81,14 +83,14 @@ class Grid {
 
         gridRows.eachWithIndex { row, rowIdx ->
             def topBuffer = new StringBuffer( verticalEdge )
-            def cellBottomLeft = lastRow( rowIdx ) ? bottomLeft : verticalEdge
+            def cellBottomLeft = lastRow( rowIdx ) ? bottomLeft : leftjoint
 
             def bottomBuffer = new StringBuffer( cellBottomLeft )
             row.eachWithIndex { cell, cellIdx ->
                 def eastBoundary = cell?.linkedTo( cell.east ) ? verticalLink : verticalEdge
                 def southBoundary = cell?.linkedTo( cell.south ) ? horizontalLink : horizontalEdge
 
-                def cellBottomRight = ((lastRow( rowIdx ) && lastColumn( cellIdx )) ? bottomRight : (lastRow( rowIdx )) ? bottomJoint : (lastColumn( cellIdx )) ? verticalEdge : corner)
+                def cellBottomRight = ((lastRow( rowIdx ) && lastColumn( cellIdx )) ? bottomRight : (lastRow( rowIdx )) ? bottomJoint : (lastColumn( cellIdx )) ? rightJoint : corner)
 
                 topBuffer << cellBody << eastBoundary
                 bottomBuffer << southBoundary << cellBottomRight

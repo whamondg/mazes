@@ -80,9 +80,9 @@ class GridTest extends Specification {
         def grid = new Grid( 3, 5 )
         def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${LINE_END}" +
                        "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
-                       "┃━━━╋━━━╋━━━╋━━━╋━━━┃${LINE_END}" +
+                       "┣━━━╋━━━╋━━━╋━━━╋━━━┫${LINE_END}" +
                        "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
-                       "┃━━━╋━━━╋━━━╋━━━╋━━━┃${LINE_END}" +
+                       "┣━━━╋━━━╋━━━╋━━━╋━━━┫${LINE_END}" +
                        "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
                        "┗━━━┻━━━┻━━━┻━━━┻━━━┛${LINE_END}"
 
