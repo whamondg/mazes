@@ -54,8 +54,10 @@ class Grid {
     static final String LINE_END = System.getProperty( "line.separator" )
 
     String toString() {
-        def buffer = new StringBuffer()
-
+        def topLeft = '┏'
+        def topRight = '┓'
+        def bottomLeft = '┗'
+        def bottomRight = '┛'
         def cellBody = '   '
         def corner = '╋'
         def verticalEdge = '┃'
@@ -63,17 +65,19 @@ class Grid {
         def horizontalEdge = '━━━'
         def horizontalLink = '   '
 
-        buffer << corner << "${horizontalEdge}$corner" * columns << LINE_END
+        def buffer = new StringBuffer( topLeft )
 
-        gridRows.each { row ->
-            def topBuffer = new StringBuffer(verticalEdge)
-            def bottomBuffer = new StringBuffer(corner)
-            row.each { cell ->
-                def eastBoundary = cell?.linkedTo(cell.east) ? verticalLink : verticalEdge
-                def southBoundary = cell?.linkedTo(cell.south) ? horizontalLink : horizontalEdge
+        buffer << "${ horizontalEdge }$corner" * (columns - 1) << horizontalEdge << topRight << LINE_END
+
+        gridRows.eachWithIndex { row, rowIdx ->
+            def topBuffer = new StringBuffer( verticalEdge )
+            def bottomBuffer = new StringBuffer( rowIdx == rows - 1 ? bottomLeft : corner )
+            row.eachWithIndex { cell, cellIdx ->
+                def eastBoundary = cell?.linkedTo( cell.east ) ? verticalLink : verticalEdge
+                def southBoundary = cell?.linkedTo( cell.south ) ? horizontalLink : horizontalEdge
 
                 topBuffer << cellBody << eastBoundary
-                bottomBuffer << southBoundary << corner
+                bottomBuffer << southBoundary << ((rowIdx == rows - 1 && cellIdx == columns - 1) ? bottomRight : corner)
             }
             buffer << topBuffer + LINE_END
             buffer << bottomBuffer + LINE_END
