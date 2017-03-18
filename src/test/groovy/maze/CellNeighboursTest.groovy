@@ -4,10 +4,6 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class CellNeighboursTest extends Specification {
-    public static final NORTH_CELL = new Cell( 1, 2 )
-    public static final EAST_CELL = new Cell( 2, 3 )
-    public static final SOUTH_CELL = new Cell( 3, 2 )
-    public static final WEST_CELL = new Cell( 2, 1 )
 
     @Unroll
     def "cell neighbours correct when north #north south #south east #east west #west"() {
@@ -56,5 +52,28 @@ class CellNeighboursTest extends Specification {
 
     }
 
+    @Unroll
+    def "cell neighbours can be filtered by #filter"() {
+        setup:
+        def testCell = new Cell( 1, 1 )
+        testCell.north = northCell
+        testCell.south = southCell
+        testCell.east = eastCell
+        testCell.west = westCell
 
+        when:
+        def result = testCell.neighbours( filter )
+
+        then:
+        result == expected as Set
+
+        where:
+        northCell        | southCell        | eastCell         | westCell         | filter             | expected
+        new Cell( 1, 2 ) | new Cell( 3, 2 ) | new Cell( 2, 3 ) | new Cell( 2, 1 ) | ['north']          | [northCell]
+        new Cell( 1, 2 ) | new Cell( 3, 2 ) | new Cell( 2, 3 ) | new Cell( 2, 1 ) | ['south']          | [southCell]
+        new Cell( 1, 2 ) | new Cell( 3, 2 ) | new Cell( 2, 3 ) | new Cell( 2, 1 ) | ['east']           | [eastCell]
+        new Cell( 1, 2 ) | new Cell( 3, 2 ) | new Cell( 2, 3 ) | new Cell( 2, 1 ) | ['west']           | [westCell]
+        new Cell( 1, 2 ) | new Cell( 3, 2 ) | new Cell( 2, 3 ) | new Cell( 2, 1 ) | ['north', 'south'] | [northCell, southCell]
+        new Cell( 1, 2 ) | new Cell( 3, 2 ) | new Cell( 2, 3 ) | new Cell( 2, 1 ) | ['east', 'west']   | [eastCell, westCell]
+    }
 }

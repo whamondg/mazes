@@ -19,6 +19,10 @@ class Cell {
         this.column = column
     }
 
+    Set neighbours( filter ) {
+        filter.collect { this."$it" }.findAll { it != null }
+    }
+
     Set neighbours() {
         [north, south, east, west].findAll { it != null }
     }
