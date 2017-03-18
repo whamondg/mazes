@@ -1,5 +1,6 @@
 package maze
 
+import maze.algorithm.CellVisitor
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -63,7 +64,7 @@ class GridTest extends Specification {
 
         then:
         IllegalArgumentException ex = thrown()
-        ex.message == "No cell $cellRow,$cellColumn in grid with dimensions ${rows}x${columns}" as String
+        ex.message == "No cell $cellRow,$cellColumn in grid with dimensions ${ rows }x${ columns }" as String
 
         where:
         cellRow | cellColumn | rows | columns
@@ -115,6 +116,27 @@ class GridTest extends Specification {
         3   | 2      | ['north': [2, 2], 'south': null, 'east': [3, 3], 'west': [3, 1]]
         3   | 3      | ['north': [2, 3], 'south': null, 'east': null, 'west': [3, 2]]
     }
+
+    def "all grid cells can be visited"() {
+        setup:
+        def grid = new Grid( 3, 3 )
+        def visitor = Mock( CellVisitor )
+
+        when:
+        grid.visitEachCell( visitor )
+
+        then:
+        1 * visitor.visitCell( new Cell( 1, 1 ) )
+        1 * visitor.visitCell( new Cell( 1, 2 ) )
+        1 * visitor.visitCell( new Cell( 1, 3 ) )
+        1 * visitor.visitCell( new Cell( 2, 1 ) )
+        1 * visitor.visitCell( new Cell( 2, 2 ) )
+        1 * visitor.visitCell( new Cell( 2, 3 ) )
+        1 * visitor.visitCell( new Cell( 3, 1 ) )
+        1 * visitor.visitCell( new Cell( 3, 2 ) )
+        1 * visitor.visitCell( new Cell( 3, 3 ) )
+    }
+
 
     def "a grid with no links can be output as a string"() {
         setup:

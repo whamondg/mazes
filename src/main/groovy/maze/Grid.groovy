@@ -1,5 +1,7 @@
 package maze
 
+import maze.algorithm.CellVisitor
+
 class Grid {
     List gridRows = []
     int rows
@@ -61,6 +63,15 @@ class Grid {
 
     boolean lastColumn( int colIdx ) {
         colIdx == columns - 1
+    }
+
+    void visitEachCell( CellVisitor visitor ) {
+        gridRows.each { row ->
+            row.each { cell ->
+                println cell
+                visitor.visitCell( cell )
+            }
+        }
     }
 
     String toString() {
