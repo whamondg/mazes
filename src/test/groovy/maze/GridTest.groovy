@@ -31,6 +31,32 @@ class GridTest extends Specification {
     }
 
     @Unroll
+    def "a grid cell can be accessed row=#row column=#column"() {
+        setup:
+        def grid = new Grid( 3, 3 )
+
+        when:
+        def cell = grid.cell( row, column )
+
+        then:
+        cell == new Cell( row, column )
+
+        where:
+        row | column
+        1   | 1
+        1   | 2
+        1   | 3
+        2   | 1
+        2   | 2
+        2   | 3
+        3   | 1
+        3   | 2
+        3   | 3
+    }
+
+
+
+    @Unroll
     def "grid size is #size when rows=#rows and columns=#columns"() {
 
         when:
@@ -78,82 +104,80 @@ class GridTest extends Specification {
     def "a grid with no links can be output as a string"() {
         setup:
         def grid = new Grid( 3, 5 )
-        def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${LINE_END}" +
-                       "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
-                       "┣━━━╋━━━╋━━━╋━━━╋━━━┫${LINE_END}" +
-                       "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
-                       "┣━━━╋━━━╋━━━╋━━━╋━━━┫${LINE_END}" +
-                       "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
-                       "┗━━━┻━━━┻━━━┻━━━┻━━━┛${LINE_END}"
+        def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${ LINE_END }" +
+                "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
+                "┣━━━╋━━━╋━━━╋━━━╋━━━┫${ LINE_END }" +
+                "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
+                "┣━━━╋━━━╋━━━╋━━━╋━━━┫${ LINE_END }" +
+                "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
+                "┗━━━┻━━━┻━━━┻━━━┻━━━┛${ LINE_END }"
 
         when:
         def result = grid.toString()
         println result
 
         then:
-        result == expected
+        result == expected as String
     }
 
     def "a grid with some links can be output as a string"() {
         setup:
-        def grid = new Grid( 3, 5)
-        grid.cell(1,1).link( grid.cell( 1,2 ) )
-        grid.cell(1,2).link( grid.cell( 2,2 ) )
-        grid.cell(2,2).link( grid.cell( 2,1 ) )
-        grid.cell(1,4).link( grid.cell( 2,4 ) )
-        grid.cell(2,4).link( grid.cell( 3,4 ) )
-        grid.cell(1,4).link( grid.cell( 1,5 ) )
+        def grid = new Grid( 3, 5 )
+        grid.cell( 1, 1 ).link( grid.cell( 1, 2 ) )
+        grid.cell( 1, 2 ).link( grid.cell( 2, 2 ) )
+        grid.cell( 2, 2 ).link( grid.cell( 2, 1 ) )
+        grid.cell( 1, 4 ).link( grid.cell( 2, 4 ) )
+        grid.cell( 2, 4 ).link( grid.cell( 3, 4 ) )
+        grid.cell( 1, 4 ).link( grid.cell( 1, 5 ) )
 
-        def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${LINE_END}" +
-                       "┃       ┃   ┃       ┃${LINE_END}" +
-                       "┣━━━╋   ╋━━━╋   ╋━━━┫${LINE_END}" +
-                       "┃       ┃   ┃   ┃   ┃${LINE_END}" +
-                       "┣━━━╋━━━╋━━━╋   ╋━━━┫${LINE_END}" +
-                       "┃   ┃   ┃   ┃   ┃   ┃${LINE_END}" +
-                       "┗━━━┻━━━┻━━━┻━━━┻━━━┛${LINE_END}"
+        def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${ LINE_END }" +
+                "┃       ┃   ┃       ┃${ LINE_END }" +
+                "┣━━━╋   ╋━━━╋   ╋━━━┫${ LINE_END }" +
+                "┃       ┃   ┃   ┃   ┃${ LINE_END }" +
+                "┣━━━╋━━━╋━━━╋   ╋━━━┫${ LINE_END }" +
+                "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
+                "┗━━━┻━━━┻━━━┻━━━┻━━━┛${ LINE_END }"
 
         when:
         def result = grid.toString()
         println result
 
         then:
-        result == expected
+        result == expected as String
     }
 
     def "a grid with all links can be output as a string"() {
         setup:
         def grid = new Grid( 3, 3 )
-        grid.cell(1,1).link( grid.cell( 1,2 ) )
-        grid.cell(1,2).link( grid.cell( 1,3 ) )
+        grid.cell( 1, 1 ).link( grid.cell( 1, 2 ) )
+        grid.cell( 1, 2 ).link( grid.cell( 1, 3 ) )
 
-        grid.cell(1,1).link( grid.cell( 2,1 ) )
-        grid.cell(1,2).link( grid.cell( 2,2 ) )
-        grid.cell(1,3).link( grid.cell( 2,3 ) )
+        grid.cell( 1, 1 ).link( grid.cell( 2, 1 ) )
+        grid.cell( 1, 2 ).link( grid.cell( 2, 2 ) )
+        grid.cell( 1, 3 ).link( grid.cell( 2, 3 ) )
 
-        grid.cell(2,1).link( grid.cell( 2,2 ) )
-        grid.cell(2,2).link( grid.cell( 2,3 ) )
+        grid.cell( 2, 1 ).link( grid.cell( 2, 2 ) )
+        grid.cell( 2, 2 ).link( grid.cell( 2, 3 ) )
 
-        grid.cell(2,1).link( grid.cell( 3,1 ) )
-        grid.cell(2,2).link( grid.cell( 3,2 ) )
-        grid.cell(2,3).link( grid.cell( 3,3 ) )
+        grid.cell( 2, 1 ).link( grid.cell( 3, 1 ) )
+        grid.cell( 2, 2 ).link( grid.cell( 3, 2 ) )
+        grid.cell( 2, 3 ).link( grid.cell( 3, 3 ) )
 
-        grid.cell(3,1).link( grid.cell( 3,2 ) )
-        grid.cell(3,2).link( grid.cell( 3,3 ) )
+        grid.cell( 3, 1 ).link( grid.cell( 3, 2 ) )
+        grid.cell( 3, 2 ).link( grid.cell( 3, 3 ) )
 
-
-        def expected = "┏━━━┳━━━┳━━━┓${LINE_END}" +
-                       "┃           ┃${LINE_END}" +
-                       "┣   ╋   ╋   ┫${LINE_END}" +
-                       "┃           ┃${LINE_END}" +
-                       "┣   ╋   ╋   ┫${LINE_END}" +
-                       "┃           ┃${LINE_END}" +
-                       "┗━━━┻━━━┻━━━┛${LINE_END}"
+        def expected = "┏━━━┳━━━┳━━━┓${ LINE_END }" +
+                "┃           ┃${ LINE_END }" +
+                "┣   ╋   ╋   ┫${ LINE_END }" +
+                "┃           ┃${ LINE_END }" +
+                "┣   ╋   ╋   ┫${ LINE_END }" +
+                "┃           ┃${ LINE_END }" +
+                "┗━━━┻━━━┻━━━┛${ LINE_END }"
 
         when:
         def result = grid.toString()
-        println result
 
         then:
-        result == expected
+        result == expected as String
     }
 }
