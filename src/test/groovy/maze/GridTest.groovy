@@ -54,6 +54,21 @@ class GridTest extends Specification {
         3   | 3
     }
 
+    def "accessing a non existent grid cell"() {
+        setup:
+        def grid = new Grid( rows, columns )
+
+        when:
+        grid.cell( cellRow, cellColumn )
+
+        then:
+        IllegalArgumentException ex = thrown()
+        ex.message == "No cell $cellRow,$cellColumn in grid with dimensions ${rows}x${columns}"
+
+        where:
+        cellRow | cellColumn | rows | columns
+        4       | 1          | 3    | 3
+    }
 
 
     @Unroll
@@ -105,12 +120,12 @@ class GridTest extends Specification {
         setup:
         def grid = new Grid( 3, 5 )
         def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${ LINE_END }" +
-                "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
-                "┣━━━╋━━━╋━━━╋━━━╋━━━┫${ LINE_END }" +
-                "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
-                "┣━━━╋━━━╋━━━╋━━━╋━━━┫${ LINE_END }" +
-                "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
-                "┗━━━┻━━━┻━━━┻━━━┻━━━┛${ LINE_END }"
+                       "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
+                       "┣━━━╋━━━╋━━━╋━━━╋━━━┫${ LINE_END }" +
+                       "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
+                       "┣━━━╋━━━╋━━━╋━━━╋━━━┫${ LINE_END }" +
+                       "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
+                       "┗━━━┻━━━┻━━━┻━━━┻━━━┛${ LINE_END }"
 
         when:
         def result = grid.toString()
@@ -131,12 +146,12 @@ class GridTest extends Specification {
         grid.cell( 1, 4 ).link( grid.cell( 1, 5 ) )
 
         def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${ LINE_END }" +
-                "┃       ┃   ┃       ┃${ LINE_END }" +
-                "┣━━━╋   ╋━━━╋   ╋━━━┫${ LINE_END }" +
-                "┃       ┃   ┃   ┃   ┃${ LINE_END }" +
-                "┣━━━╋━━━╋━━━╋   ╋━━━┫${ LINE_END }" +
-                "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
-                "┗━━━┻━━━┻━━━┻━━━┻━━━┛${ LINE_END }"
+                       "┃       ┃   ┃       ┃${ LINE_END }" +
+                       "┣━━━╋   ╋━━━╋   ╋━━━┫${ LINE_END }" +
+                       "┃       ┃   ┃   ┃   ┃${ LINE_END }" +
+                       "┣━━━╋━━━╋━━━╋   ╋━━━┫${ LINE_END }" +
+                       "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
+                       "┗━━━┻━━━┻━━━┻━━━┻━━━┛${ LINE_END }"
 
         when:
         def result = grid.toString()
@@ -167,12 +182,12 @@ class GridTest extends Specification {
         grid.cell( 3, 2 ).link( grid.cell( 3, 3 ) )
 
         def expected = "┏━━━┳━━━┳━━━┓${ LINE_END }" +
-                "┃           ┃${ LINE_END }" +
-                "┣   ╋   ╋   ┫${ LINE_END }" +
-                "┃           ┃${ LINE_END }" +
-                "┣   ╋   ╋   ┫${ LINE_END }" +
-                "┃           ┃${ LINE_END }" +
-                "┗━━━┻━━━┻━━━┛${ LINE_END }"
+                       "┃           ┃${ LINE_END }" +
+                       "┣   ╋   ╋   ┫${ LINE_END }" +
+                       "┃           ┃${ LINE_END }" +
+                       "┣   ╋   ╋   ┫${ LINE_END }" +
+                       "┃           ┃${ LINE_END }" +
+                       "┗━━━┻━━━┻━━━┛${ LINE_END }"
 
         when:
         def result = grid.toString()

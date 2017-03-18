@@ -37,6 +37,9 @@ class Grid {
     }
 
     Cell cell( int row, int column ) {
+        if ( row > this.rows || column > this.columns ) {
+            throw new IllegalArgumentException( "No cell $row,$column in grid with dimensions ${ rows }x${ columns }" )
+        }
         gridCell( row - 1, column - 1 )
     }
 
