@@ -4,6 +4,7 @@ class Grid {
     List gridRows = []
     int rows
     int columns
+    def linePrinter = new UnicodeLinePrinter()
 
     Grid( rows, columns ) {
         this.rows = rows
@@ -43,7 +44,7 @@ class Grid {
         gridCell( row - 1, column - 1 )
     }
 
-    Cell gridCell( int row, int column ) {
+    private Cell gridCell( int row, int column ) {
         if ( !((row >= 0) && (row <= gridRows.size() - 1)) ) {
             return null
         }
@@ -62,45 +63,34 @@ class Grid {
         colIdx == columns - 1
     }
 
-    static final String LINE_END = System.getProperty( "line.separator" )
-
     String toString() {
-        def topLeft = '┏'
-        def topJoint = '┳'
-        def topRight = '┓'
-        def bottomLeft = '┗'
-        def bottomJoint = '┻'
-        def bottomRight = '┛'
-        def leftjoint = '┣'
-        def rightJoint = '┫'
-        def cellBody = '   '
-        def corner = '╋'
-        def verticalEdge = '┃'
-        def verticalLink = ' '
-        def horizontalEdge = '━━━'
-        def horizontalLink = '   '
-
-        def buffer = new StringBuffer( topLeft )
-
-        buffer << "${ horizontalEdge }$topJoint" * (columns - 1) << horizontalEdge << topRight << LINE_END
+        linePrinter.add( 'TOP_LEFT' )
+        (columns - 1).times {
+            linePrinter.add( 'HORIZONTAL_EDGE' ).add( 'TOP_JOINT' )
+        }
+        linePrinter.add( 'HORIZONTAL_EDGE' ).add( 'TOP_RIGHT' ).lineEnd()
 
         gridRows.eachWithIndex { row, rowIdx ->
-            def topBuffer = new StringBuffer( verticalEdge )
-            def cellBottomLeft = lastRow( rowIdx ) ? bottomLeft : leftjoint
+            def middleRow = ['VERTICAL_EDGE']
+            def bottomRow = [] << (lastRow( rowIdx ) ? 'BOTTOM_LEFT' : 'LEFT_JOINT')
 
-            def bottomBuffer = new StringBuffer( cellBottomLeft )
             row.eachWithIndex { cell, cellIdx ->
-                def eastBoundary = cell?.linkedTo( cell.east ) ? verticalLink : verticalEdge
-                def southBoundary = cell?.linkedTo( cell.south ) ? horizontalLink : horizontalEdge
+                middleRow << 'CELL_BODY'
+                middleRow << (cell?.linkedTo( cell.east ) ? 'VERTICAL_LINK' : 'VERTICAL_EDGE')
 
-                def cellBottomRight = ((lastRow( rowIdx ) && lastColumn( cellIdx )) ? bottomRight : (lastRow( rowIdx )) ? bottomJoint : (lastColumn( cellIdx )) ? rightJoint : corner)
+                bottomRow << (cell?.linkedTo( cell.south ) ? 'HORIZONTAL_LINK' : 'HORIZONTAL_EDGE')
 
-                topBuffer << cellBody << eastBoundary
-                bottomBuffer << southBoundary << cellBottomRight
+                if ( lastRow( rowIdx ) ) {
+                    bottomRow << (lastColumn( cellIdx ) ? 'BOTTOM_RIGHT' : 'BOTTOM_JOINT')
+                } else {
+                    bottomRow << (lastColumn( cellIdx ) ? 'RIGHT_JOINT' : 'CORNER')
+                }
             }
-            buffer << topBuffer << LINE_END
-            buffer << bottomBuffer << LINE_END
+
+            linePrinter.add( middleRow ).lineEnd()
+            linePrinter.add( bottomRow ).lineEnd()
         }
-        buffer.toString()
+
+        linePrinter.toString()
     }
 }

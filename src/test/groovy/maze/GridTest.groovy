@@ -54,7 +54,7 @@ class GridTest extends Specification {
         3   | 3
     }
 
-    def "accessing a non existent grid cell"() {
+    def "IllegalArgumentException thrown when accessing a non existent grid cell"() {
         setup:
         def grid = new Grid( rows, columns )
 
@@ -63,7 +63,7 @@ class GridTest extends Specification {
 
         then:
         IllegalArgumentException ex = thrown()
-        ex.message == "No cell $cellRow,$cellColumn in grid with dimensions ${rows}x${columns}"
+        ex.message == "No cell $cellRow,$cellColumn in grid with dimensions ${rows}x${columns}" as String
 
         where:
         cellRow | cellColumn | rows | columns
@@ -129,7 +129,6 @@ class GridTest extends Specification {
 
         when:
         def result = grid.toString()
-        println result
 
         then:
         result == expected as String
@@ -155,7 +154,6 @@ class GridTest extends Specification {
 
         when:
         def result = grid.toString()
-        println result
 
         then:
         result == expected as String
