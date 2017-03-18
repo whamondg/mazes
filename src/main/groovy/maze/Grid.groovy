@@ -68,7 +68,6 @@ class Grid {
     void visitEachCell( CellVisitor visitor ) {
         gridRows.each { row ->
             row.each { cell ->
-                println cell
                 visitor.visitCell( cell )
             }
         }
