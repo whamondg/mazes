@@ -32,6 +32,40 @@ class GridTest extends Specification {
     }
 
     @Unroll
+    def "grid with #rows rows and #columns columns has dimensions #dimensions"() {
+        when:
+        def grid = new Grid( rows, columns )
+
+        then:
+        grid.dimensions() == dimensions
+
+        where:
+        rows | columns | dimensions
+        1    | 1       | '1x1'
+        2    | 2       | '2x2'
+        3    | 3       | '3x3'
+        10   | 10      | '10x10'
+    }
+
+    @Unroll
+    def "grid size is #size when rows=#rows and columns=#columns"() {
+
+        when:
+        def grid = new Grid( rows, columns )
+
+        then:
+        grid.size() == size
+
+        where:
+        rows | columns || size
+        1    | 1       || 1
+        1    | 2       || 2
+        2    | 1       || 2
+        2    | 2       || 4
+        10   | 10      || 100
+    }
+
+    @Unroll
     def "a grid cell can be accessed row=#row column=#column"() {
         setup:
         def grid = new Grid( 3, 3 )
@@ -69,25 +103,6 @@ class GridTest extends Specification {
         where:
         cellRow | cellColumn | rows | columns
         4       | 1          | 3    | 3
-    }
-
-
-    @Unroll
-    def "grid size is #size when rows=#rows and columns=#columns"() {
-
-        when:
-        def grid = new Grid( rows, columns )
-
-        then:
-        grid.size() == size
-
-        where:
-        rows | columns || size
-        1    | 1       || 1
-        1    | 2       || 2
-        2    | 1       || 2
-        2    | 2       || 4
-        10   | 10      || 100
     }
 
     @Unroll

@@ -4,11 +4,17 @@ import maze.algorithm.BinaryTreeAlgorithm
 int row = args[0] as int
 int col = args[1] as int
 
+Grid grid = new Grid( row, col )
+
 println()
-println "Creating Maze with dimensions $row $col"
+println """
+Creating Maze:
+    Size = ${ grid.size() }
+    Dimensions = ${ grid.dimensions() }
+"""
 println()
 
-def grid = new Grid( row, col )
+
 
 new BinaryTreeAlgorithm().on( grid )
 

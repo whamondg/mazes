@@ -26,11 +26,11 @@ class Grid {
 
     void configureCells() {
         gridRows.eachWithIndex { row, rowIdx ->
-            row.eachWithIndex { currentCell, colIdx ->
-                currentCell.north = gridCell( rowIdx - 1, colIdx )
-                currentCell.south = gridCell( rowIdx + 1, colIdx )
-                currentCell.east = gridCell( rowIdx, colIdx + 1 )
-                currentCell.west = gridCell( rowIdx, colIdx - 1 )
+            row.eachWithIndex { cell, colIdx ->
+                cell.north = gridCell( rowIdx - 1, colIdx )
+                cell.south = gridCell( rowIdx + 1, colIdx )
+                cell.east = gridCell( rowIdx, colIdx + 1 )
+                cell.west = gridCell( rowIdx, colIdx - 1 )
             }
         }
     }
@@ -39,9 +39,13 @@ class Grid {
         rows * columns
     }
 
+    String dimensions() {
+        "${ rows }x$columns"
+    }
+
     Cell cell( int row, int column ) {
         if ( row > this.rows || column > this.columns ) {
-            throw new IllegalArgumentException( "No cell $row,$column in grid with dimensions ${ rows }x${ columns }" )
+            throw new IllegalArgumentException( "No cell $row,$column in grid with dimensions ${ dimensions() }" )
         }
         gridCell( row - 1, column - 1 )
     }
