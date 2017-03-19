@@ -1,5 +1,7 @@
 package maze.algorithm
 
+import maze.Cell
+
 interface CellVisitor {
-    void visitCell( cell )
+    void visitCell( Cell cell )
 }
