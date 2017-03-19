@@ -1,9 +1,10 @@
 package maze
 
 import maze.algorithm.CellVisitor
+import maze.algorithm.RowVisitor
 
 class Grid {
-    List gridRows = []
+    List<List<Cell>> gridRows = []
     int rows
     int columns
     def linePrinter = new UnicodeLinePrinter()
@@ -69,6 +70,12 @@ class Grid {
         colIdx == columns - 1
     }
 
+    void visitEachRow( RowVisitor visitor ) {
+        gridRows.each { row ->
+            visitor.visitRow( row )
+        }
+    }
+
     void visitEachCell( CellVisitor visitor ) {
         gridRows.each { row ->
             row.each { cell ->
@@ -107,4 +114,5 @@ class Grid {
 
         linePrinter.toString()
     }
+
 }

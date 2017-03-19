@@ -1,6 +1,7 @@
 package maze
 
 import maze.algorithm.CellVisitor
+import maze.algorithm.RowVisitor
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -130,6 +131,23 @@ class GridTest extends Specification {
         3   | 1      | ['north': [2, 1], 'south': null, 'east': [3, 2], 'west': null]
         3   | 2      | ['north': [2, 2], 'south': null, 'east': [3, 3], 'west': [3, 1]]
         3   | 3      | ['north': [2, 3], 'south': null, 'east': null, 'west': [3, 2]]
+    }
+
+    def "all rows can be visited"() {
+        setup:
+        def grid = new Grid( 3, 3 )
+        def row1 = [new Cell( 1, 1 ), new Cell( 1, 2 ), new Cell( 1, 3 )]
+        def row2 = [new Cell( 2, 1 ), new Cell( 2, 2 ), new Cell( 2, 3 )]
+        def row3 = [new Cell( 3, 1 ), new Cell( 3, 2 ), new Cell( 3, 3 )]
+        def visitor = Mock( RowVisitor )
+
+        when:
+        grid.visitEachRow( visitor )
+
+        then:
+        1 * visitor.visitRow( row1 )
+        1 * visitor.visitRow( row2 )
+        1 * visitor.visitRow( row3 )
     }
 
     def "all grid cells can be visited"() {
