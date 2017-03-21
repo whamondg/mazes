@@ -4,6 +4,65 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class CellNeighboursTest extends Specification {
+    def testCell
+    def neighbour
+
+    void setup() {
+        testCell = new Cell( 1, 1 )
+        neighbour = new Cell( 2, 2 )
+    }
+
+    def "cell knows it's not on the north Edge"() {
+        when:
+        testCell.north = neighbour
+
+        then:
+        testCell.onNorthEdge() == false
+    }
+
+    def "cell knows it's on the north Edge"() {
+        expect:
+        testCell.onNorthEdge() == true
+    }
+
+    def "cell knows it's not on the east Edge"() {
+        when:
+        testCell.east = neighbour
+
+        then:
+        testCell.onEastEdge() == false
+    }
+
+    def "cell knows it's on the east Edge"() {
+        expect:
+        testCell.onEastEdge() == true
+    }
+
+    def "cell knows it's not on the south Edge"() {
+        when:
+        testCell.south = neighbour
+
+        then:
+        testCell.onSouthEdge() == false
+    }
+
+    def "cell knows it's on the south Edge"() {
+        expect:
+        testCell.onSouthEdge() == true
+    }
+
+    def "cell knows it's not on the west Edge"() {
+        when:
+        testCell.west = neighbour
+
+        then:
+        testCell.onWestEdge() == false
+    }
+
+    def "cell knows it's on the west Edge"() {
+        expect:
+        testCell.onWestEdge() == true
+    }
 
     @Unroll
     def "cell neighbours correct when north #north south #south east #east west #west"() {

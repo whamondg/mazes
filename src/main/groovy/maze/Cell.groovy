@@ -19,6 +19,22 @@ class Cell {
         this.column = column
     }
 
+    boolean onNorthEdge(){
+        this.north == null
+    }
+
+    boolean onSouthEdge(){
+        this.south == null
+    }
+
+    boolean onEastEdge(){
+        this.east == null
+    }
+
+    boolean onWestEdge(){
+        this.west == null
+    }
+
     Set neighbours( filter ) {
         filter.collect { this."$it" }.findAll { it != null }
     }
