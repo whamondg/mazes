@@ -1,5 +1,6 @@
 import maze.Grid
 import maze.algorithm.BinaryTreeAlgorithm
+import maze.algorithm.SidewinderAlgorithm
 
 int row = args[0] as int
 int col = args[1] as int
@@ -14,8 +15,11 @@ Creating Maze:
 """
 println()
 
-
-
 new BinaryTreeAlgorithm().on( grid )
-
+println "Binary Tree maze"
 println grid
+
+Grid grid2 = new Grid( row, col )
+new SidewinderAlgorithm().on( grid2 )
+println "Sidewinder maze"
+println grid2
