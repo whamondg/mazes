@@ -6,7 +6,8 @@ import groovy.transform.ToString
 @ToString( includes = ['row', 'column'] )
 @EqualsAndHashCode( includes = ['row', 'column'] )
 class Cell {
-    Set links = []
+    static final String[] POSSIBLE_NEIGHBOURS = ['north', 'south', 'east', 'west']
+    Set<Cell> links = []
     Cell north
     Cell south
     Cell east
@@ -19,46 +20,45 @@ class Cell {
         this.column = column
     }
 
-    boolean onNorthEdge(){
-        this.north == null
+    boolean onNorthEdge() {
+        cellMissing( north )
     }
 
-    boolean onSouthEdge(){
-        this.south == null
+    boolean onSouthEdge() {
+        cellMissing( south )
     }
 
-    boolean onEastEdge(){
-        this.east == null
+    boolean onEastEdge() {
+        cellMissing( east )
     }
 
-    boolean onWestEdge(){
-        this.west == null
+    boolean onWestEdge() {
+        cellMissing( west )
     }
 
-    Set neighbours( filter ) {
+    Set neighbours( filter = POSSIBLE_NEIGHBOURS ) {
         filter.collect { this."$it" }.findAll { it != null }
     }
-
-    Set neighbours() {
-        [north, south, east, west].findAll { it != null }
-    }
-
 
     boolean linkedTo( Cell cell ) {
         links.contains( cell )
     }
 
-    void link( Cell cell, boolean bidirectional = true ) {
+    void link( Cell cell ) {
         links << cell
-        if ( bidirectional ) {
-            cell.link( this, false )
+        if ( !cell.linkedTo( this ) ) {
+            cell.link( this )
         }
     }
 
-    void unlink( Cell cell, boolean bidirectional = true ) {
+    void unlink( Cell cell ) {
         links.remove( cell )
-        if ( bidirectional ) {
-            cell.unlink( this, false )
+        if ( cell.linkedTo( this ) ) {
+            cell.unlink( this )
         }
+    }
+
+    private static boolean cellMissing( Cell cell ) {
+        !(cell as boolean)
     }
 }
