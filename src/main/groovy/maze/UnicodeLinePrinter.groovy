@@ -28,9 +28,7 @@ class UnicodeLinePrinter {
     }
 
     def add( def elements ) {
-        elements.each {
-            buffer << parts[it]
-        }
+        elements.each { buffer << parts[it] }
         this
     }
 
