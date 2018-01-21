@@ -4,21 +4,23 @@ import maze.Cell
 
 class BinaryTreeAlgorithm implements CellVisitor {
 
-    def randomCell( Set cells ) {
-        Random random = new Random()
-        if ( cells.size() == 0 ) {
-            return null
-        }
-        int idx = random.nextInt( cells.size() )
-        cells[idx]
+    static final VALID_NEIGHBOURS = ['north', 'east']
+
+    int randomIndex( int limit ) {
+        new Random().nextInt( limit )
+    }
+
+    Cell randomCell( Set<Cell> cells ) {
+        (cells.size() == 0) ? null : cells[randomIndex( cells.size() )]
+    }
+
+    Cell randomNeighbour(Cell cell) {
+        randomCell( cell.neighbours( VALID_NEIGHBOURS ) )
     }
 
     void visitCell( Cell cell ) {
-        def neighbours = cell.neighbours( ['north', 'east'] )
-
-        def neighbour = randomCell( neighbours )
-
-        if ( neighbour != null ) {
+        def neighbour = randomNeighbour(cell)
+        if ( neighbour ) {
             cell.link( neighbour )
         }
     }

@@ -11,25 +11,26 @@ class SidewinderAlgorithm implements RowVisitor {
         random.nextInt( 2 ) == 0
     }
 
+    boolean closeRun( Cell cell ) {
+        cell.onEastEdge() || (!cell.onNorthEdge() && randomRunClose())
+    }
+
     Cell randomCellFromRun() {
         run[random.nextInt( run.size() )]
+    }
+
+    void linkRunAndClear() {
+        Cell chosenCell = randomCellFromRun()
+        if ( chosenCell.north ) {
+            chosenCell.link( chosenCell.north )
+        }
+        run.clear()
     }
 
     void visitRow( List<Cell> row ) {
         row.each { cell ->
             run << cell
-
-            def closeRun = cell.onEastEdge() || (!cell.onNorthEdge() && randomRunClose())
-
-            if ( closeRun ) {
-                Cell chosenCell = randomCellFromRun()
-                if ( chosenCell.north ) {
-                    chosenCell.link( chosenCell.north )
-                }
-                run.clear()
-            } else {
-                cell.link( cell.east )
-            }
+            (closeRun( cell )) ? linkRunAndClear() : cell.link( cell.east )
         }
     }
 
