@@ -2,7 +2,6 @@ package maze.grid
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
-import maze.solve.CellDistances
 
 @ToString( includes = ['row', 'column'] )
 @EqualsAndHashCode( includes = ['row', 'column'] )

@@ -1,7 +1,6 @@
-package maze.solve
+package maze.grid
 
 import groovy.transform.ToString
-import maze.grid.Cell
 
 @ToString( includeNames=true, includes = ['root', 'cellSet'] )
 class CellDistances {

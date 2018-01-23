@@ -1,5 +1,8 @@
 package maze.grid
 
+import maze.grid.converter.GridConverter
+import maze.grid.converter.UnicodeGridConverter
+
 class Grid {
     List<List<Cell>> gridRows = []
     int rows

@@ -1,4 +1,7 @@
-package maze.grid
+package maze.grid.converter
+
+import maze.grid.Cell
+import maze.grid.Grid
 
 class UnicodeGridConverter implements GridConverter<String> {
     static final String LINE_END = System.getProperty( "line.separator" )
@@ -11,7 +14,6 @@ class UnicodeGridConverter implements GridConverter<String> {
             BOTTOM_RIGHT   : '┛',
             LEFT_JOINT     : '┣',
             RIGHT_JOINT    : '┫',
-            CELL_BODY      : '   ',
             CORNER         : '╋',
             VERTICAL_EDGE  : '┃',
             VERTICAL_LINK  : ' ',
@@ -41,6 +43,10 @@ class UnicodeGridConverter implements GridConverter<String> {
         this
     }
 
+    String cellContent( Cell cell) {
+        " "
+    }
+
     String convertGrid( Grid grid ) {
         def buffer = new StringBuffer()
         buffer << parts.TOP_LEFT
@@ -55,7 +61,7 @@ class UnicodeGridConverter implements GridConverter<String> {
             def bottomRow = [] << (grid.lastRow( rowIdx ) ? parts.BOTTOM_LEFT : parts.LEFT_JOINT)
 
             row.eachWithIndex { cell, cellIdx ->
-                middleRow << parts.CELL_BODY
+                middleRow << " ${cellContent( cell )} "
                 middleRow << (cell?.linkedTo( cell.east ) ? parts.VERTICAL_LINK : parts.VERTICAL_EDGE)
 
                 bottomRow << (cell?.linkedTo( cell.south ) ? parts.HORIZONTAL_LINK : parts.HORIZONTAL_EDGE)

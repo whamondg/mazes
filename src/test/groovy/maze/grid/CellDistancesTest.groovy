@@ -1,8 +1,6 @@
-package maze.solve
+package maze.grid
 
-import maze.grid.Grid
 import spock.lang.Specification
-
 
 class CellDistancesTest extends Specification {
 

@@ -1,6 +1,5 @@
-package maze
+package maze.grid
 
-import maze.grid.Cell
 import spock.lang.Specification
 import spock.lang.Unroll
 
