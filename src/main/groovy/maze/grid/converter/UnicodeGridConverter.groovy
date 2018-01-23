@@ -17,35 +17,9 @@ class UnicodeGridConverter implements GridConverter<String> {
             CORNER         : '╋',
             VERTICAL_EDGE  : '┃',
             VERTICAL_LINK  : ' ',
-            HORIZONTAL_EDGE: '━━━',
-            HORIZONTAL_LINK: '   '
+            HORIZONTAL_EDGE: '━━━━',
+            HORIZONTAL_LINK: '    '
     ]
-
-
-    def buffer = new StringBuffer()
-
-    def add( String element ) {
-        buffer << parts[element]
-        this
-    }
-
-    def add( def elements ) {
-        elements.each { buffer << parts[it] }
-        this
-    }
-
-    String toString() {
-        buffer.toString()
-    }
-
-    def lineEnd() {
-        buffer << LINE_END
-        this
-    }
-
-    String cellContent( Cell cell) {
-        " "
-    }
 
     String convertGrid( Grid grid ) {
         def buffer = new StringBuffer()
@@ -61,7 +35,7 @@ class UnicodeGridConverter implements GridConverter<String> {
             def bottomRow = [] << (grid.lastRow( rowIdx ) ? parts.BOTTOM_LEFT : parts.LEFT_JOINT)
 
             row.eachWithIndex { cell, cellIdx ->
-                middleRow << " ${cellContent( cell )} "
+                middleRow << " ${grid.cellContent( cell ).padRight(3)}"
                 middleRow << (cell?.linkedTo( cell.east ) ? parts.VERTICAL_LINK : parts.VERTICAL_EDGE)
 
                 bottomRow << (cell?.linkedTo( cell.south ) ? parts.HORIZONTAL_LINK : parts.HORIZONTAL_EDGE)

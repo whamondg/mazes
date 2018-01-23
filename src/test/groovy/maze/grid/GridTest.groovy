@@ -172,13 +172,13 @@ class GridTest extends Specification {
     def "a grid with no links can be output as a string"() {
         setup:
         def grid = new Grid( 3, 5 )
-        def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${ LINE_END }" +
-                       "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
-                       "┣━━━╋━━━╋━━━╋━━━╋━━━┫${ LINE_END }" +
-                       "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
-                       "┣━━━╋━━━╋━━━╋━━━╋━━━┫${ LINE_END }" +
-                       "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
-                       "┗━━━┻━━━┻━━━┻━━━┻━━━┛${ LINE_END }"
+        def expected = "┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┓${ LINE_END }" +
+                       "┃    ┃    ┃    ┃    ┃    ┃${ LINE_END }" +
+                       "┣━━━━╋━━━━╋━━━━╋━━━━╋━━━━┫${ LINE_END }" +
+                       "┃    ┃    ┃    ┃    ┃    ┃${ LINE_END }" +
+                       "┣━━━━╋━━━━╋━━━━╋━━━━╋━━━━┫${ LINE_END }" +
+                       "┃    ┃    ┃    ┃    ┃    ┃${ LINE_END }" +
+                       "┗━━━━┻━━━━┻━━━━┻━━━━┻━━━━┛${ LINE_END }"
 
         when:
         def result = grid.toString()
@@ -197,13 +197,13 @@ class GridTest extends Specification {
         grid.cell( 2, 4 ).link( grid.cell( 3, 4 ) )
         grid.cell( 1, 4 ).link( grid.cell( 1, 5 ) )
 
-        def expected = "┏━━━┳━━━┳━━━┳━━━┳━━━┓${ LINE_END }" +
-                       "┃       ┃   ┃       ┃${ LINE_END }" +
-                       "┣━━━╋   ╋━━━╋   ╋━━━┫${ LINE_END }" +
-                       "┃       ┃   ┃   ┃   ┃${ LINE_END }" +
-                       "┣━━━╋━━━╋━━━╋   ╋━━━┫${ LINE_END }" +
-                       "┃   ┃   ┃   ┃   ┃   ┃${ LINE_END }" +
-                       "┗━━━┻━━━┻━━━┻━━━┻━━━┛${ LINE_END }"
+        def expected = "┏━━━━┳━━━━┳━━━━┳━━━━┳━━━━┓${ LINE_END }" +
+                       "┃         ┃    ┃         ┃${ LINE_END }" +
+                       "┣━━━━╋    ╋━━━━╋    ╋━━━━┫${ LINE_END }" +
+                       "┃         ┃    ┃    ┃    ┃${ LINE_END }" +
+                       "┣━━━━╋━━━━╋━━━━╋    ╋━━━━┫${ LINE_END }" +
+                       "┃    ┃    ┃    ┃    ┃    ┃${ LINE_END }" +
+                       "┗━━━━┻━━━━┻━━━━┻━━━━┻━━━━┛${ LINE_END }"
 
         when:
         def result = grid.toString()
@@ -232,13 +232,13 @@ class GridTest extends Specification {
         grid.cell( 3, 1 ).link( grid.cell( 3, 2 ) )
         grid.cell( 3, 2 ).link( grid.cell( 3, 3 ) )
 
-        def expected = "┏━━━┳━━━┳━━━┓${ LINE_END }" +
-                       "┃           ┃${ LINE_END }" +
-                       "┣   ╋   ╋   ┫${ LINE_END }" +
-                       "┃           ┃${ LINE_END }" +
-                       "┣   ╋   ╋   ┫${ LINE_END }" +
-                       "┃           ┃${ LINE_END }" +
-                       "┗━━━┻━━━┻━━━┛${ LINE_END }"
+        def expected = "┏━━━━┳━━━━┳━━━━┓${ LINE_END }" +
+                       "┃              ┃${ LINE_END }" +
+                       "┣    ╋    ╋    ┫${ LINE_END }" +
+                       "┃              ┃${ LINE_END }" +
+                       "┣    ╋    ╋    ┫${ LINE_END }" +
+                       "┃              ┃${ LINE_END }" +
+                       "┗━━━━┻━━━━┻━━━━┛${ LINE_END }"
 
         when:
         def result = grid.toString()

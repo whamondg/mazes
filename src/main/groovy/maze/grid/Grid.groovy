@@ -9,7 +9,7 @@ class Grid {
     int columns
     GridConverter stringConverter = new UnicodeGridConverter()
 
-    Grid( rows, columns ) {
+    Grid( int rows, int columns ) {
         this.rows = rows
         this.columns = columns
         prepareGrid()
@@ -51,7 +51,11 @@ class Grid {
         gridCell( row - 1, column - 1 )
     }
 
-    private Cell gridCell( int row, int column ) {
+    String cellContent( Cell cell) {
+        " "
+    }
+
+    protected Cell gridCell( int row, int column ) {
         if ( !((row >= 0) && (row <= gridRows.size() - 1)) ) {
             return null
         }
