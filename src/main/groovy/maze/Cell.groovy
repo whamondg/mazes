@@ -2,6 +2,7 @@ package maze
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
+import maze.solve.CellDistances
 
 @ToString( includes = ['row', 'column'] )
 @EqualsAndHashCode( includes = ['row', 'column'] )
@@ -56,6 +57,17 @@ class Cell {
         if ( cell.linkedTo( this ) ) {
             cell.unlink( this )
         }
+    }
+
+    CellDistances distances() {
+        CellDistances cellDistances = new CellDistances( this )
+        List<Cell> frontier = [this]
+
+        while ( frontier.size() > 0 ) {
+            frontier = cellDistances.calculateFrontierDistances( cellDistances, frontier )
+        }
+
+        cellDistances
     }
 
     private static boolean cellMissing( Cell cell ) {
