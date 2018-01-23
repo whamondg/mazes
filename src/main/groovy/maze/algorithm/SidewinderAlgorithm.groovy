@@ -1,6 +1,7 @@
 package maze.algorithm
 
-import maze.Cell
+import maze.grid.Cell
+import maze.grid.RowVisitor
 
 class SidewinderAlgorithm implements RowVisitor {
     List<Cell> run = []

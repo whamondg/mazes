@@ -1,7 +1,8 @@
 package maze.algorithm
 
-import maze.Cell
-import maze.Grid
+import maze.grid.Cell
+import maze.grid.CellVisitor
+import maze.grid.Grid
 import spock.lang.Specification
 import spock.lang.Unroll
 

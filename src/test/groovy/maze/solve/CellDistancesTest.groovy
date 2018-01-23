@@ -1,6 +1,6 @@
 package maze.solve
 
-import maze.Grid
+import maze.grid.Grid
 import spock.lang.Specification
 
 

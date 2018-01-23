@@ -1,7 +1,8 @@
 package maze.algorithm
 
-import maze.Cell
-import maze.Grid
+import maze.grid.Cell
+import maze.grid.Grid
+import maze.grid.RowVisitor
 import spock.lang.Specification
 
 class SideWinderAlgorithmTest extends Specification {

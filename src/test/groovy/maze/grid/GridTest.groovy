@@ -1,7 +1,5 @@
-package maze
+package maze.grid
 
-import maze.algorithm.CellVisitor
-import maze.algorithm.RowVisitor
 import spock.lang.Specification
 import spock.lang.Unroll
 

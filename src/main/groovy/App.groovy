@@ -1,6 +1,6 @@
-import maze.Grid
 import maze.algorithm.BinaryTreeAlgorithm
 import maze.algorithm.SidewinderAlgorithm
+import maze.grid.Grid
 
 int row = args[0] as int
 int col = args[1] as int

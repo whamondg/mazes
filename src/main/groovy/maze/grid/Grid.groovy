@@ -1,13 +1,10 @@
-package maze
-
-import maze.algorithm.CellVisitor
-import maze.algorithm.RowVisitor
+package maze.grid
 
 class Grid {
     List<List<Cell>> gridRows = []
     int rows
     int columns
-    def linePrinter = new UnicodeLinePrinter()
+    GridConverter stringConverter = new UnicodeGridConverter()
 
     Grid( rows, columns ) {
         this.rows = rows
@@ -85,34 +82,7 @@ class Grid {
     }
 
     String toString() {
-        linePrinter.add( 'TOP_LEFT' )
-        (columns - 1).times {
-            linePrinter.add( 'HORIZONTAL_EDGE' ).add( 'TOP_JOINT' )
-        }
-        linePrinter.add( 'HORIZONTAL_EDGE' ).add( 'TOP_RIGHT' ).lineEnd()
-
-        gridRows.eachWithIndex { row, rowIdx ->
-            def middleRow = ['VERTICAL_EDGE']
-            def bottomRow = [] << (lastRow( rowIdx ) ? 'BOTTOM_LEFT' : 'LEFT_JOINT')
-
-            row.eachWithIndex { cell, cellIdx ->
-                middleRow << 'CELL_BODY'
-                middleRow << (cell?.linkedTo( cell.east ) ? 'VERTICAL_LINK' : 'VERTICAL_EDGE')
-
-                bottomRow << (cell?.linkedTo( cell.south ) ? 'HORIZONTAL_LINK' : 'HORIZONTAL_EDGE')
-
-                if ( lastRow( rowIdx ) ) {
-                    bottomRow << (lastColumn( cellIdx ) ? 'BOTTOM_RIGHT' : 'BOTTOM_JOINT')
-                } else {
-                    bottomRow << (lastColumn( cellIdx ) ? 'RIGHT_JOINT' : 'CORNER')
-                }
-            }
-
-            linePrinter.add( middleRow ).lineEnd()
-            linePrinter.add( bottomRow ).lineEnd()
-        }
-
-        linePrinter.toString()
+        stringConverter.convertGrid( this )
     }
 
 }

@@ -1,5 +1,6 @@
 package maze
 
+import maze.grid.Cell
 import spock.lang.Specification
 
 class CellLinkingTest extends Specification {

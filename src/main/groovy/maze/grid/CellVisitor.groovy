@@ -1,6 +1,4 @@
-package maze.algorithm
-
-import maze.Cell
+package maze.grid
 
 interface CellVisitor {
     void visitCell( Cell cell )

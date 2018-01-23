@@ -1,4 +1,4 @@
-package maze
+package maze.grid
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString

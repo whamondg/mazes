@@ -1,6 +1,7 @@
 package maze.algorithm
 
-import maze.Cell
+import maze.grid.Cell
+import maze.grid.CellVisitor
 
 class BinaryTreeAlgorithm implements CellVisitor {
 
