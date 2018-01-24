@@ -14,18 +14,17 @@ Creating Maze:
     Dimensions = ${ grid.dimensions() }
 """
 
-//new BinaryTreeAlgorithm().on( grid )
-//println "Binary Tree maze"
-//println grid
-//
-//Grid grid2 = new Grid( row, col )
-//new SidewinderAlgorithm().on( grid2 )
-//println "Sidewinder maze"
-//println grid2
+new BinaryTreeAlgorithm().on( grid )
+println "Binary Tree maze"
+println grid
 
+Grid grid2 = new Grid( row, col )
+new SidewinderAlgorithm().on( grid2 )
+println "Sidewinder maze"
+println grid2
+
+println "Distance grid solved with Dijkstra's Algorithm"
 DistanceGrid distanceGrid = new DistanceGrid(row,col)
 new SidewinderAlgorithm(  ).on(distanceGrid)
-println distanceGrid
-
-distanceGrid.start(distanceGrid.cell(1,1))
+distanceGrid.start(1,1)
 println distanceGrid
