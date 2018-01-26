@@ -2,6 +2,7 @@ package maze.algorithm
 
 import maze.grid.Cell
 import maze.grid.Grid
+import maze.grid.Row
 import maze.grid.RowVisitor
 import spock.lang.Specification
 
@@ -17,26 +18,23 @@ class SideWinderAlgorithmTest extends Specification {
         Grid grid = Mock()
 
         when:
-        algorithm.on( grid )
+        algorithm.on(grid)
 
         then:
-        1 * grid.visitEachRow( algorithm )
+        1 * grid.visitEachRow(algorithm)
     }
 
     def "sidewinder algorithm closes run at eastern edge"() {
         setup:
-        Cell north = new Cell( 1, 1 )
-        Cell cell = new Cell( 2, 1 )
-        cell.north = north
-
-        Grid grid = Stub( Grid ) {
-            visitEachRow( _ as RowVisitor ) >> { RowVisitor visitor ->
-                visitor.visitRow( [cell] )
+        Cell testCell = new Cell(1, 1)
+        Grid grid = Stub(Grid) {
+            visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
+                visitor.visitRow(new Row([testCell]))
             }
         }
 
         when:
-        algorithm.on( grid )
+        algorithm.on(grid)
 
         then:
         assert algorithm.run.size() == 0
@@ -44,37 +42,36 @@ class SideWinderAlgorithmTest extends Specification {
 
     def "sidewinder algorithm links north if possible when run closes"() {
         setup:
-        Cell north = new Cell( 1, 1 )
-        Cell cell = new Cell( 2, 1 )
-        cell.north = north
+        Cell north = new Cell(1, 1)
+        Cell testCell = new Cell(2, 1)
+        testCell.north = north
 
-        Grid grid = Stub( Grid ) {
-            visitEachRow( _ as RowVisitor ) >> { RowVisitor visitor ->
-                visitor.visitRow( [cell] )
+        Grid grid = Stub(Grid) {
+            visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
+                visitor.visitRow(new Row([testCell]))
             }
         }
 
         when:
-        algorithm.on( grid )
+        algorithm.on(grid)
 
         then:
-        assert cell.linkedTo( north )
+        assert testCell.linkedTo(north)
     }
 
     def "sidewinder algorithm doesn't close run if not on eastern edge and at northern edge"() {
         setup:
-        Cell east = new Cell( 2, 2 )
-        Cell cell = new Cell( 2, 1 )
-        cell.east = east
+        Cell testCell = new Cell(2, 1)
+        testCell.east =  new Cell(2, 2)
 
-        Grid grid = Stub( Grid ) {
-            visitEachRow( _ as RowVisitor ) >> { RowVisitor visitor ->
-                visitor.visitRow( [cell] )
+        Grid grid = Stub(Grid) {
+            visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
+                visitor.visitRow(new Row([testCell]))
             }
         }
 
         when:
-        algorithm.on( grid )
+        algorithm.on(grid)
 
         then:
         assert algorithm.run.size() == 1
@@ -82,41 +79,45 @@ class SideWinderAlgorithmTest extends Specification {
 
     def "sidewinder algorithm links east if run is not being closed"() {
         setup:
-        Cell east = new Cell( 2, 2 )
-        Cell cell = new Cell( 2, 1 )
-        cell.east = east
+        Cell east = new Cell(2, 2)
+        Cell testCell = new Cell(2, 1)
+        testCell.east = east
 
-        Grid grid = Stub( Grid ) {
-            visitEachRow( _ as RowVisitor ) >> { RowVisitor visitor ->
-                visitor.visitRow( [cell] )
+        Row row = new Row([testCell])
+
+        Grid grid = Stub(Grid) {
+            visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
+                visitor.visitRow(row)
             }
         }
 
         when:
-        algorithm.on( grid )
+        algorithm.on(grid)
 
         then:
-        assert cell.linkedTo( east )
+        assert testCell.linkedTo(east)
     }
 
-    def "sidewinder algorithm randomly closes run if not on northern edge"() {
+    def "sidewinder algorithm randomly closes run if not on northern or eastern edges"() {
         setup:
-        algorithm = Spy( SidewinderAlgorithm )
+        algorithm = Spy(SidewinderAlgorithm)
 
-        Cell north = new Cell( 1, 1 )
-        Cell east = new Cell( 2, 2 )
-        Cell cell = new Cell( 2, 1 )
-        cell.east = east
-        cell.north = north
+        Cell north = new Cell(1, 1)
+        Cell east = new Cell(2, 2)
+        Cell testCell = new Cell(2, 1)
+        testCell.east = east
+        testCell.north = north
 
-        Grid grid = Stub( Grid ) {
-            visitEachRow( _ as RowVisitor ) >> { RowVisitor visitor ->
-                visitor.visitRow( [cell] )
+        Row row = new Row([testCell])
+
+        Grid grid = Stub(Grid) {
+            visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
+                visitor.visitRow(row)
             }
         }
 
         when:
-        algorithm.on( grid )
+        algorithm.on(grid)
 
         then:
         1 * algorithm.randomRunClose()
@@ -124,21 +125,23 @@ class SideWinderAlgorithmTest extends Specification {
 
     def "sidewinder algorithm does not randomly close run if on northern edge"() {
         setup:
-        algorithm = Spy( SidewinderAlgorithm )
+        algorithm = Spy(SidewinderAlgorithm)
 
-        Cell cell1 = new Cell( 1, 1 )
-        Cell cell2 = new Cell( 1, 2 )
+        Cell cell1 = new Cell(1, 1)
+        Cell cell2 = new Cell(1, 2)
         cell1.east = cell2
-        cell2.east = new Cell( 1, 3 )
+        cell2.east = new Cell(1, 3)
 
-        Grid grid = Stub( Grid ) {
-            visitEachRow( _ as RowVisitor ) >> { RowVisitor visitor ->
-                visitor.visitRow( [cell1, cell2] )
+        Row row = new Row([cell1, cell2])
+
+        Grid grid = Stub(Grid) {
+            visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
+                visitor.visitRow(row)
             }
         }
 
         when:
-        algorithm.on( grid )
+        algorithm.on(grid)
 
         then:
         algorithm.run.size() == 2

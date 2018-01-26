@@ -1,6 +1,7 @@
 package maze.algorithm
 
 import maze.grid.Cell
+import maze.grid.Row
 import maze.grid.RowVisitor
 
 class SidewinderAlgorithm implements RowVisitor {
@@ -28,7 +29,7 @@ class SidewinderAlgorithm implements RowVisitor {
         run.clear()
     }
 
-    void visitRow( List<Cell> row ) {
+    void visitRow(Row row ) {
         row.each { cell ->
             run << cell
             (closeRun( cell )) ? linkRunAndClear() : cell.link( cell.east )

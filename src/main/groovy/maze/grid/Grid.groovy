@@ -4,7 +4,7 @@ import maze.grid.converter.GridConverter
 import maze.grid.converter.UnicodeGridConverter
 
 class Grid {
-    List<List<Cell>> gridRows = []
+    List<Row> gridRows = []
     int rows
     int columns
     GridConverter stringConverter = new UnicodeGridConverter()
@@ -17,17 +17,21 @@ class Grid {
     }
 
     void prepareGrid() {
-        rows.times { row ->
-            gridRows << []
+//        println "Preparing grid: rows:$rows, columns:$columns"
+        rows.times { rowNumber ->
+//            println "Creating row: $rowNumber"
+            def row = new Row()
             columns.times { column ->
-                gridRows[row] << new Cell( row + 1, column + 1 )
+                row << new Cell( rowNumber + 1, column + 1 )
             }
+            gridRows << row
         }
     }
 
     void configureCells() {
         gridRows.eachWithIndex { row, rowIdx ->
             row.eachWithIndex { cell, colIdx ->
+//                println "Configure cell $rowIdx, $colIdx"
                 cell.north = gridCell( rowIdx - 1, colIdx )
                 cell.south = gridCell( rowIdx + 1, colIdx )
                 cell.east = gridCell( rowIdx, colIdx + 1 )

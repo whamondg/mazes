@@ -1,5 +1,5 @@
 package maze.grid
 
 interface RowVisitor {
-    void visitRow( List<Cell> row )
+    void visitRow( Row row )
 }
