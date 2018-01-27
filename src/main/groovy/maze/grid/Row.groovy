@@ -1,28 +1,38 @@
 package maze.grid
 
-import groovy.transform.EqualsAndHashCode
+import groovy.util.logging.Slf4j
 
-//@EqualsAndHashCode( includes = ['cells'] )
+@Slf4j
 class Row {
     @Delegate
     List<Cell> cells = []
 
     int rowIndex
+    int rowPosition
 
     Row(rowIndex) {
+        log.debug "Creating row: $rowIndex"
         this.rowIndex = rowIndex
+        this.rowPosition = rowIndex + 1
     }
 
     Row(int rowIndex, List<Cell> cells) {
-        this.rowIndex = rowIndex
+        this(rowIndex)
         this.cells = cells
     }
 
-    int rowPosition() {
-        rowIndex + 1
+    Row withCells(int cellNumber) {
+        cellNumber.times { addCell() }
+        return this
     }
 
     void addCell() {
-        cells << new Cell(rowPosition(), cells.size() + 1)
+        cells << new Cell(rowPosition, cells.size() + 1)
+    }
+
+    void visitEachCell(CellVisitor visitor) {
+        cells.each { cell ->
+            visitor.visitCell(cell)
+        }
     }
 }

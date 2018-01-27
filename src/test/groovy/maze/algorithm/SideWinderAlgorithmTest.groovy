@@ -34,7 +34,7 @@ class SideWinderAlgorithmTest extends Specification {
         Cell testCell = new Cell(1, 1)
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(testRow([testCell]))
+                visitor.visitRow(testRow([testCell]), null)
             }
         }
 
@@ -53,7 +53,7 @@ class SideWinderAlgorithmTest extends Specification {
 
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(testRow([testCell]))
+                visitor.visitRow(testRow([testCell]), null)
             }
         }
 
@@ -71,7 +71,7 @@ class SideWinderAlgorithmTest extends Specification {
 
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(testRow([testCell]))
+                visitor.visitRow(testRow([testCell]), null)
             }
         }
 
@@ -90,7 +90,7 @@ class SideWinderAlgorithmTest extends Specification {
 
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(testRow([testCell]))
+                visitor.visitRow(testRow([testCell]), null)
             }
         }
 
@@ -113,7 +113,7 @@ class SideWinderAlgorithmTest extends Specification {
 
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(testRow([testCell]))
+                visitor.visitRow(testRow([testCell]), null)
             }
         }
 
@@ -135,7 +135,7 @@ class SideWinderAlgorithmTest extends Specification {
 
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(testRow([cell1, cell2]))
+                visitor.visitRow(testRow([cell1, cell2]), null)
             }
         }
 

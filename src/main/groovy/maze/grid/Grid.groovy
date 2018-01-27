@@ -5,41 +5,39 @@ import maze.grid.converter.GridConverter
 import maze.grid.converter.UnicodeGridConverter
 
 @Slf4j
+class BasicCellLinker implements RowVisitor {
+
+    @Override
+    void visitRow(Row row, Grid grid) {
+        row.eachWithIndex { cell, colIdx ->
+            log.debug "Configure cell $row.rowIndex, $colIdx"
+            cell.north = grid.gridCell(row.rowIndex - 1, colIdx)
+            cell.south = grid.gridCell(row.rowIndex + 1, colIdx)
+            cell.east = grid.gridCell(row.rowIndex, colIdx + 1)
+            cell.west = grid.gridCell(row.rowIndex, colIdx - 1)
+        }
+    }
+}
+
+@Slf4j
 class Grid {
     List<Row> gridRows = []
     int rows
     int columns
     GridConverter stringConverter = new UnicodeGridConverter()
 
-    Grid( int rows, int columns ) {
+    Grid(int rows, int columns) {
         this.rows = rows
         this.columns = columns
-        prepareGrid()
-        configureCells()
+        createGrid()
     }
 
-    void prepareGrid() {
-        log.debug "Preparing grid: rows:$rows, columns:$columns"
+    private void createGrid() {
+        log.debug "Creating grid: rows:$rows, columns:$columns"
         rows.times { rowIndex ->
-            log.debug "Creating row: $rowIndex"
-            def row = new Row(rowIndex)
-            columns.times { column ->
-                row.addCell()
-            }
-            gridRows << row
+            gridRows << new Row(rowIndex).withCells(columns)
         }
-    }
-
-    void configureCells() {
-        gridRows.eachWithIndex { row, rowIdx ->
-            row.eachWithIndex { cell, colIdx ->
-                log.debug "Configure cell $rowIdx, $colIdx"
-                cell.north = gridCell( rowIdx - 1, colIdx )
-                cell.south = gridCell( rowIdx + 1, colIdx )
-                cell.east = gridCell( rowIdx, colIdx + 1 )
-                cell.west = gridCell( rowIdx, colIdx - 1 )
-            }
-        }
+        this.visitEachRow(new BasicCellLinker())
     }
 
     int size() {
@@ -47,55 +45,53 @@ class Grid {
     }
 
     String dimensions() {
-        "${ rows }x$columns"
+        "${rows}x$columns"
     }
 
-    Cell cell( int row, int column ) {
-        if ( row > this.rows || column > this.columns ) {
-            throw new IllegalArgumentException( "No cell $row,$column in grid with dimensions ${ dimensions() }" )
+    Cell cell(int row, int column) {
+        if (row > this.rows || column > this.columns) {
+            throw new IllegalArgumentException("No cell $row,$column in grid with dimensions ${dimensions()}")
         }
-        gridCell( row - 1, column - 1 )
+        gridCell(row - 1, column - 1)
     }
 
-    String cellContent( Cell cell) {
+    String cellContent(Cell cell) {
         " "
     }
 
-    protected Cell gridCell( int row, int column ) {
-        if ( !((row >= 0) && (row <= gridRows.size() - 1)) ) {
+    protected Cell gridCell(int row, int column) {
+        if (!((row >= 0) && (row <= gridRows.size() - 1))) {
             return null
         }
-        if ( !(column >= 0) && (column <= gridRows[row].size() - 1) ) {
+        if (!(column >= 0) && (column <= gridRows[row].size() - 1)) {
             return null
         }
 
         gridRows[row][column] as Cell
     }
 
-    boolean lastRow( int rowIdx ) {
+    boolean lastRow(int rowIdx) {
         rowIdx == rows - 1
     }
 
-    boolean lastColumn( int colIdx ) {
+    boolean lastColumn(int colIdx) {
         colIdx == columns - 1
     }
 
-    void visitEachRow( RowVisitor visitor ) {
+    void visitEachRow(RowVisitor visitor) {
         gridRows.each { row ->
-            visitor.visitRow( row )
+            visitor.visitRow(row, this)
         }
     }
 
-    void visitEachCell( CellVisitor visitor ) {
+    void visitEachCell(CellVisitor visitor) {
         gridRows.each { row ->
-            row.each { cell ->
-                visitor.visitCell( cell )
-            }
+            row.visitEachCell(visitor)
         }
     }
 
     String toString() {
-        stringConverter.convertGrid( this )
+        stringConverter.convertGrid(this)
     }
 
 }
