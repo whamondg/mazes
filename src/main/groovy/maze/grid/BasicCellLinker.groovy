@@ -18,13 +18,10 @@ class BasicCellLinker implements CellVisitor, RowVisitor {
 
     @Override
     void visitCell(Cell cell) {
-        int rowIndex = cell.row - 1
-        int colIndex = cell.column - 1
-
-        log.debug "Linking cell $rowIndex, $colIndex to neighbours"
-        cell.north = grid.gridCell(rowIndex - 1, colIndex)
-        cell.south = grid.gridCell(rowIndex + 1, colIndex)
-        cell.east = grid.gridCell(rowIndex, colIndex + 1)
-        cell.west = grid.gridCell(rowIndex, colIndex - 1)
+        log.debug "Linking cell $cell.rowIndex, $cell.columnIndex to neighbours"
+        cell.north = grid.gridCell(cell.rowIndex - 1, cell.columnIndex)
+        cell.south = grid.gridCell(cell.rowIndex + 1, cell.columnIndex)
+        cell.east = grid.gridCell(cell.rowIndex, cell.columnIndex + 1)
+        cell.west = grid.gridCell(cell.rowIndex, cell.columnIndex - 1)
     }
 }

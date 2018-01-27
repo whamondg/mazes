@@ -7,12 +7,11 @@ class Row {
     @Delegate
     List<Cell> cells = []
 
-    int rowIndex
     int rowPosition
+    boolean lastRow = false
 
     Row(rowIndex) {
         log.debug "Creating row: $rowIndex"
-        this.rowIndex = rowIndex
         this.rowPosition = rowIndex + 1
     }
 
@@ -27,7 +26,11 @@ class Row {
     }
 
     void addCell() {
+        if(cells.size() > 0) {
+            cells.last().lastCell = false
+        }
         cells << new Cell(rowPosition, cells.size() + 1)
+        cells.last().lastCell = true
     }
 
     void visitEachCell(CellVisitor visitor) {

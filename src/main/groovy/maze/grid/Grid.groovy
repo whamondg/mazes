@@ -22,6 +22,7 @@ class Grid {
         rows.times { rowIndex ->
             gridRows << new Row(rowIndex).withCells(columns)
         }
+        gridRows.last().lastRow = true
         this.visitEachRow(new BasicCellLinker(this))
     }
 
@@ -55,14 +56,6 @@ class Grid {
         gridRows[row][column] as Cell
     }
 
-    boolean lastRow(int rowIdx) {
-        rowIdx == rows - 1
-    }
-
-    boolean lastColumn(int colIdx) {
-        colIdx == columns - 1
-    }
-
     void visitEachRow(RowVisitor visitor) {
         gridRows.each { row ->
             visitor.visitRow(row)
@@ -78,5 +71,4 @@ class Grid {
     String toString() {
         stringConverter.convertGrid(this)
     }
-
 }

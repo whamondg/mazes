@@ -14,10 +14,15 @@ class Cell {
     Cell west
     int row
     int column
+    int rowIndex
+    int columnIndex
+    boolean lastCell
 
     Cell( int row, int column ) {
         this.row = row
         this.column = column
+        this.rowIndex = row -1
+        this.columnIndex = column -1
     }
 
     boolean onNorthEdge() {

@@ -29,21 +29,20 @@ class UnicodeGridConverter implements GridConverter<String> {
         }
         buffer <<  parts.HORIZONTAL_EDGE << parts.TOP_RIGHT << LINE_END
 
-
-        grid.gridRows.eachWithIndex { row, rowIdx ->
+        grid.gridRows.each { row ->
             def middleRow = [parts.VERTICAL_EDGE]
-            def bottomRow = [] << (grid.lastRow( rowIdx ) ? parts.BOTTOM_LEFT : parts.LEFT_JOINT)
+            def bottomRow = [] << (row.lastRow ? parts.BOTTOM_LEFT : parts.LEFT_JOINT)
 
-            row.eachWithIndex { cell, cellIdx ->
+            row.each { cell ->
                 middleRow << " ${grid.cellContent( cell ).padRight(3)}"
                 middleRow << (cell?.linkedTo( cell.east ) ? parts.VERTICAL_LINK : parts.VERTICAL_EDGE)
 
                 bottomRow << (cell?.linkedTo( cell.south ) ? parts.HORIZONTAL_LINK : parts.HORIZONTAL_EDGE)
 
-                if ( grid.lastRow( rowIdx ) ) {
-                    bottomRow << (grid.lastColumn( cellIdx ) ? parts.BOTTOM_RIGHT : parts.BOTTOM_JOINT)
+                if ( row.lastRow ) {
+                    bottomRow << (cell.lastCell ? parts.BOTTOM_RIGHT : parts.BOTTOM_JOINT)
                 } else {
-                    bottomRow << (grid.lastColumn( cellIdx ) ? parts.RIGHT_JOINT : parts.CORNER)
+                    bottomRow << (cell.lastCell ? parts.RIGHT_JOINT : parts.CORNER)
                 }
             }
 
