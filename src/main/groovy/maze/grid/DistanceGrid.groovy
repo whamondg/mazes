@@ -1,5 +1,8 @@
 package maze.grid
 
+import groovy.util.logging.Slf4j
+
+@Slf4j
 class DistanceGrid extends Grid {
     CellDistances distances
 

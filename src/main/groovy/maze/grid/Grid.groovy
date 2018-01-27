@@ -1,8 +1,10 @@
 package maze.grid
 
+import groovy.util.logging.Slf4j
 import maze.grid.converter.GridConverter
 import maze.grid.converter.UnicodeGridConverter
 
+@Slf4j
 class Grid {
     List<Row> gridRows = []
     int rows
@@ -17,12 +19,12 @@ class Grid {
     }
 
     void prepareGrid() {
-//        println "Preparing grid: rows:$rows, columns:$columns"
-        rows.times { rowNumber ->
-//            println "Creating row: $rowNumber"
-            def row = new Row()
+        log.debug "Preparing grid: rows:$rows, columns:$columns"
+        rows.times { rowIndex ->
+            log.debug "Creating row: $rowIndex"
+            def row = new Row(rowIndex)
             columns.times { column ->
-                row << new Cell( rowNumber + 1, column + 1 )
+                row.addCell()
             }
             gridRows << row
         }
@@ -31,7 +33,7 @@ class Grid {
     void configureCells() {
         gridRows.eachWithIndex { row, rowIdx ->
             row.eachWithIndex { cell, colIdx ->
-//                println "Configure cell $rowIdx, $colIdx"
+                log.debug "Configure cell $rowIdx, $colIdx"
                 cell.north = gridCell( rowIdx - 1, colIdx )
                 cell.south = gridCell( rowIdx + 1, colIdx )
                 cell.east = gridCell( rowIdx, colIdx + 1 )

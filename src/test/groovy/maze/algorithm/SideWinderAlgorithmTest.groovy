@@ -7,10 +7,15 @@ import maze.grid.RowVisitor
 import spock.lang.Specification
 
 class SideWinderAlgorithmTest extends Specification {
+    int UNIMPORTANT = 0
     def algorithm
 
     void setup() {
         algorithm = new SidewinderAlgorithm()
+    }
+
+    Row testRow(List<Cell> cells) {
+        new Row(UNIMPORTANT, cells)
     }
 
     def "sidewinder algorithm visits each row in the grid"() {
@@ -29,7 +34,7 @@ class SideWinderAlgorithmTest extends Specification {
         Cell testCell = new Cell(1, 1)
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(new Row([testCell]))
+                visitor.visitRow(testRow([testCell]))
             }
         }
 
@@ -48,7 +53,7 @@ class SideWinderAlgorithmTest extends Specification {
 
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(new Row([testCell]))
+                visitor.visitRow(testRow([testCell]))
             }
         }
 
@@ -62,11 +67,11 @@ class SideWinderAlgorithmTest extends Specification {
     def "sidewinder algorithm doesn't close run if not on eastern edge and at northern edge"() {
         setup:
         Cell testCell = new Cell(2, 1)
-        testCell.east =  new Cell(2, 2)
+        testCell.east = new Cell(2, 2)
 
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(new Row([testCell]))
+                visitor.visitRow(testRow([testCell]))
             }
         }
 
@@ -83,11 +88,9 @@ class SideWinderAlgorithmTest extends Specification {
         Cell testCell = new Cell(2, 1)
         testCell.east = east
 
-        Row row = new Row([testCell])
-
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(row)
+                visitor.visitRow(testRow([testCell]))
             }
         }
 
@@ -108,11 +111,9 @@ class SideWinderAlgorithmTest extends Specification {
         testCell.east = east
         testCell.north = north
 
-        Row row = new Row([testCell])
-
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(row)
+                visitor.visitRow(testRow([testCell]))
             }
         }
 
@@ -132,11 +133,9 @@ class SideWinderAlgorithmTest extends Specification {
         cell1.east = cell2
         cell2.east = new Cell(1, 3)
 
-        Row row = new Row([cell1, cell2])
-
         Grid grid = Stub(Grid) {
             visitEachRow(_ as RowVisitor) >> { RowVisitor visitor ->
-                visitor.visitRow(row)
+                visitor.visitRow(testRow([cell1, cell2]))
             }
         }
 

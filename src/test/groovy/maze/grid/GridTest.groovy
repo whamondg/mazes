@@ -134,9 +134,9 @@ class GridTest extends Specification {
     def "all rows can be visited"() {
         setup:
         def grid = new Grid( 3, 3 )
-        def row1 = new Row ([new Cell( 1, 1 ), new Cell( 1, 2 ), new Cell( 1, 3 )])
-        def row2 = new Row ([new Cell( 2, 1 ), new Cell( 2, 2 ), new Cell( 2, 3 )])
-        def row3 = new Row ([new Cell( 3, 1 ), new Cell( 3, 2 ), new Cell( 3, 3 )])
+        def row1 = new Row (UNIMPORTANT,[new Cell( 1, 1 ), new Cell( 1, 2 ), new Cell( 1, 3 )])
+        def row2 = new Row (UNIMPORTANT,[new Cell( 2, 1 ), new Cell( 2, 2 ), new Cell( 2, 3 )])
+        def row3 = new Row (UNIMPORTANT,[new Cell( 3, 1 ), new Cell( 3, 2 ), new Cell( 3, 3 )])
         def visitor = Mock( RowVisitor )
 
         when:
