@@ -5,21 +5,6 @@ import maze.grid.converter.GridConverter
 import maze.grid.converter.UnicodeGridConverter
 
 @Slf4j
-class BasicCellLinker implements RowVisitor {
-
-    @Override
-    void visitRow(Row row, Grid grid) {
-        row.eachWithIndex { cell, colIdx ->
-            log.debug "Configure cell $row.rowIndex, $colIdx"
-            cell.north = grid.gridCell(row.rowIndex - 1, colIdx)
-            cell.south = grid.gridCell(row.rowIndex + 1, colIdx)
-            cell.east = grid.gridCell(row.rowIndex, colIdx + 1)
-            cell.west = grid.gridCell(row.rowIndex, colIdx - 1)
-        }
-    }
-}
-
-@Slf4j
 class Grid {
     List<Row> gridRows = []
     int rows
@@ -37,7 +22,7 @@ class Grid {
         rows.times { rowIndex ->
             gridRows << new Row(rowIndex).withCells(columns)
         }
-        this.visitEachRow(new BasicCellLinker())
+        this.visitEachRow(new BasicCellLinker(this))
     }
 
     int size() {
@@ -80,7 +65,7 @@ class Grid {
 
     void visitEachRow(RowVisitor visitor) {
         gridRows.each { row ->
-            visitor.visitRow(row, this)
+            visitor.visitRow(row)
         }
     }
 

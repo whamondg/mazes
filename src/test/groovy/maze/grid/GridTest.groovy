@@ -143,9 +143,9 @@ class GridTest extends Specification {
         grid.visitEachRow( visitor )
 
         then:
-        1 * visitor.visitRow( row1, grid )
-        1 * visitor.visitRow( row2, grid )
-        1 * visitor.visitRow( row3, grid )
+        1 * visitor.visitRow( row1 )
+        1 * visitor.visitRow( row2 )
+        1 * visitor.visitRow( row3 )
     }
 
     def "all grid cells can be visited"() {

@@ -30,7 +30,7 @@ class SidewinderAlgorithm implements RowVisitor {
         run.clear()
     }
 
-    void visitRow(Row row, Grid grid) {
+    void visitRow(Row row) {
         row.each { cell ->
             run << cell
             (closeRun( cell )) ? linkRunAndClear() : cell.link( cell.east )
