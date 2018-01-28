@@ -11,7 +11,7 @@ Grid grid = new Grid( row, col )
 println """
 Creating Maze:
     Size = ${ grid.size() }
-    Dimensions = ${ grid.dimensions() }
+    Dimensions = ${grid.rows} x ${grid.columns}
 """
 
 new BinaryTreeAlgorithm().on( grid )

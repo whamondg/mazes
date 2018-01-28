@@ -30,13 +30,13 @@ class Grid {
         rows * columns
     }
 
-    String dimensions() {
-        "${rows}x$columns"
+    boolean cellInGrid(int row, int column) {
+        row >= 0 && row <= rows && column >= 0 && column <= columns
     }
 
     Cell cell(int row, int column) {
-        if (row > this.rows || column > this.columns) {
-            throw new IllegalArgumentException("No cell $row,$column in grid with dimensions ${dimensions()}")
+        if (!cellInGrid(row, column)) {
+            throw new IllegalArgumentException("No cell $row,$column in grid with dimensions ${rows}x${columns}")
         }
         gridCell(row - 1, column - 1)
     }

@@ -31,22 +31,6 @@ class GridTest extends Specification {
     }
 
     @Unroll
-    def "grid with #rows rows and #columns columns has dimensions #dimensions"() {
-        when:
-        def grid = new Grid( rows, columns )
-
-        then:
-        grid.dimensions() == dimensions
-
-        where:
-        rows | columns | dimensions
-        1    | 1       | '1x1'
-        2    | 2       | '2x2'
-        3    | 3       | '3x3'
-        10   | 10      | '10x10'
-    }
-
-    @Unroll
     def "grid size is #size when rows=#rows and columns=#columns"() {
 
         when:
