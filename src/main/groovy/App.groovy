@@ -1,35 +1,38 @@
+import com.beust.jcommander.JCommander
 import maze.algorithm.BinaryTreeAlgorithm
 import maze.algorithm.SidewinderAlgorithm
-import maze.grid.CellDistances
+import maze.cli.Settings
 import maze.grid.DistanceGrid
 import maze.grid.Grid
 
-int row = args[0] as int
-int col = args[1] as int
+Settings settings = new Settings();
+new JCommander(settings, args);
 
-Grid grid = new Grid( row, col )
+def algorithms = [
+        new BinaryTreeAlgorithm(),
+        new SidewinderAlgorithm()
+]
 
 println """
 Creating Maze:
-    Size = ${ grid.size() }
-    Dimensions = ${grid.rows} x ${grid.columns}
+    Dimensions = ${settings.rows} x ${settings.cols}
 """
 
-new BinaryTreeAlgorithm().on( grid )
-println "Binary Tree maze"
-println grid
+algorithms.each { drawMaze(it, settings) }
 
-Grid grid2 = new Grid( row, col )
-new SidewinderAlgorithm().on( grid2 )
-println "Sidewinder maze"
-println grid2
+//println "Distance grid solved with Dijkstra's Algorithm"
+//DistanceGrid distanceGrid = new DistanceGrid(rows,cols)
+//new SidewinderAlgorithm(  ).on(distanceGrid)
+//
+//distanceGrid.start(1,1)
+//println distanceGrid
+//
+//distanceGrid.distances = distanceGrid.distances.pathTo(distanceGrid.cell(distanceGrid.rows,distanceGrid.columns))
+//println distanceGrid
 
-println "Distance grid solved with Dijkstra's Algorithm"
-DistanceGrid distanceGrid = new DistanceGrid(row,col)
-new SidewinderAlgorithm(  ).on(distanceGrid)
-
-distanceGrid.start(1,1)
-println distanceGrid
-
-distanceGrid.distances = distanceGrid.distances.pathTo(distanceGrid.cell(distanceGrid.rows,distanceGrid.columns))
-println distanceGrid
+void drawMaze(algorithm, settings) {
+    println "Algorithm: ${algorithm.name}"
+    Grid grid = new Grid( settings.rows, settings.cols )
+    new BinaryTreeAlgorithm().on( grid )
+    println grid
+}

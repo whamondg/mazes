@@ -6,9 +6,10 @@ import maze.grid.Row
 import maze.grid.RowVisitor
 
 class SidewinderAlgorithm implements RowVisitor {
-    List<Cell> run = []
-
+    static final String name = "Sidewinder"
     Random random = new Random();
+
+    List<Cell> run = []
 
     boolean randomRunClose() {
         random.nextInt( 2 ) == 0
