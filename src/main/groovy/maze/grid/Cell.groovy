@@ -63,17 +63,6 @@ class Cell {
         }
     }
 
-    CellDistances distances() {
-        CellDistances cellDistances = new CellDistances( this )
-        List<Cell> frontier = [this]
-
-        while ( frontier.size() > 0 ) {
-            frontier = cellDistances.calculateFrontierDistances( cellDistances, frontier )
-        }
-
-        cellDistances
-    }
-
     private static boolean cellMissing( Cell cell ) {
         !(cell as boolean)
     }

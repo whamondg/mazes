@@ -41,16 +41,17 @@ class Grid {
         cellAtIndex(row - 1, column - 1)
     }
 
-    Cell cellAtIndex(int row, int column) {
-        if (!((row >= 0) && (row <= gridRows.size() - 1))) {
+    Cell cellAtIndex(int rowIndex, int columnIndex) {
+        if (!((rowIndex >= 0) && (rowIndex <= gridRows.size() - 1))) {
             return null
         }
 
-        if (!(column >= 0) && (column <= gridRows[row].size() - 1)) {
+        if (!(columnIndex >= 0) && (columnIndex <= gridRows[rowIndex].size() - 1)) {
             return null
         }
 
-        gridRows[row][column] as Cell
+        log.debug "Returning cell with index $rowIndex,$columnIndex"
+        gridRows[rowIndex][columnIndex] as Cell
     }
 
     void visitEachRow(RowVisitor visitor) {

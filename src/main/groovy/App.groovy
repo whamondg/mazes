@@ -1,5 +1,6 @@
 import maze.algorithm.BinaryTreeAlgorithm
 import maze.algorithm.SidewinderAlgorithm
+import maze.grid.CellDistances
 import maze.grid.DistanceGrid
 import maze.grid.Grid
 
@@ -26,5 +27,9 @@ println grid2
 println "Distance grid solved with Dijkstra's Algorithm"
 DistanceGrid distanceGrid = new DistanceGrid(row,col)
 new SidewinderAlgorithm(  ).on(distanceGrid)
+
 distanceGrid.start(1,1)
+println distanceGrid
+
+distanceGrid.distances = distanceGrid.distances.pathTo(distanceGrid.cell(distanceGrid.rows,distanceGrid.columns))
 println distanceGrid

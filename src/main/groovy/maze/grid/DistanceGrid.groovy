@@ -11,7 +11,8 @@ class DistanceGrid extends Grid {
     }
 
     void start( int row, int column ) {
-        distances = cell(row, column).distances()
+        distances = new CellDistances( cell(row, column) )
+        distances = distances.calculate()
     }
 
     String cellContent( Cell cell ) {

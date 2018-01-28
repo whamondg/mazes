@@ -5,5 +5,5 @@ appender('CONSOLE', ConsoleAppender) {
 }
 
 //if (System.getenv().env == 'DEV') {
-    root(DEBUG, ["CONSOLE"])
+    root(INFO, ["CONSOLE"])
 //}

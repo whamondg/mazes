@@ -13,13 +13,14 @@ class CellDistancesTest extends Specification {
         grid.cell( 2, 1 ).link( grid.cell( 2, 2 ) )
 
         when:
-        CellDistances distances = grid.cell( 1, 1 ).distances()
+
+        CellDistances distances = new CellDistances( grid.cell( 1, 1 )).calculate()
 
         then:
-        distances.cellSet[grid.cell( 1, 1 )] == 0
-        distances.cellSet[grid.cell( 1, 2 )] == 1
-        distances.cellSet[grid.cell( 2, 2 )] == 2
-        distances.cellSet[grid.cell( 2, 1 )] == 1
+        distances.cells[grid.cell( 1, 1 )] == 0
+        distances.cells[grid.cell( 1, 2 )] == 1
+        distances.cells[grid.cell( 2, 2 )] == 2
+        distances.cells[grid.cell( 2, 1 )] == 1
     }
 
     def "Cell distances are correct for 2x2 grid with a wall"() {
@@ -30,12 +31,12 @@ class CellDistancesTest extends Specification {
         grid.cell( 2, 2 ).link( grid.cell( 2, 1 ) )
 
         when:
-        CellDistances distances = grid.cell( 1, 1 ).distances()
+        CellDistances distances = new CellDistances( grid.cell( 1, 1 )).calculate()
 
         then:
-        distances.cellSet[grid.cell( 1, 1 )] == 0
-        distances.cellSet[grid.cell( 1, 2 )] == 1
-        distances.cellSet[grid.cell( 2, 2 )] == 2
-        distances.cellSet[grid.cell( 2, 1 )] == 3
+        distances.cells[grid.cell( 1, 1 )] == 0
+        distances.cells[grid.cell( 1, 2 )] == 1
+        distances.cells[grid.cell( 2, 2 )] == 2
+        distances.cells[grid.cell( 2, 1 )] == 3
     }
 }
