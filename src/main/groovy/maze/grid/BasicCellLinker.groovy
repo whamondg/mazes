@@ -19,9 +19,9 @@ class BasicCellLinker implements CellVisitor, RowVisitor {
     @Override
     void visitCell(Cell cell) {
         log.debug "Linking cell $cell.rowIndex, $cell.columnIndex to neighbours"
-        cell.north = grid.gridCell(cell.rowIndex - 1, cell.columnIndex)
-        cell.south = grid.gridCell(cell.rowIndex + 1, cell.columnIndex)
-        cell.east = grid.gridCell(cell.rowIndex, cell.columnIndex + 1)
-        cell.west = grid.gridCell(cell.rowIndex, cell.columnIndex - 1)
+        cell.north = grid.cellAtIndex(cell.rowIndex - 1, cell.columnIndex)
+        cell.south = grid.cellAtIndex(cell.rowIndex + 1, cell.columnIndex)
+        cell.east = grid.cellAtIndex(cell.rowIndex, cell.columnIndex + 1)
+        cell.west = grid.cellAtIndex(cell.rowIndex, cell.columnIndex - 1)
     }
 }

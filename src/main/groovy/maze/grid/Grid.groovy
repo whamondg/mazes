@@ -38,17 +38,14 @@ class Grid {
         if (!cellInGrid(row, column)) {
             throw new IllegalArgumentException("No cell $row,$column in grid with dimensions ${rows}x${columns}")
         }
-        gridCell(row - 1, column - 1)
+        cellAtIndex(row - 1, column - 1)
     }
 
-    String cellContent(Cell cell) {
-        " "
-    }
-
-    protected Cell gridCell(int row, int column) {
+    Cell cellAtIndex(int row, int column) {
         if (!((row >= 0) && (row <= gridRows.size() - 1))) {
             return null
         }
+
         if (!(column >= 0) && (column <= gridRows[row].size() - 1)) {
             return null
         }
@@ -70,5 +67,9 @@ class Grid {
 
     String toString() {
         stringConverter.convertGrid(this)
+    }
+
+    String cellContent(Cell cell) {
+        " "
     }
 }
