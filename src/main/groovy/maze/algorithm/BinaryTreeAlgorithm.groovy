@@ -4,7 +4,7 @@ import maze.grid.Cell
 import maze.grid.CellVisitor
 
 class BinaryTreeAlgorithm implements CellVisitor {
-    static final String name = "Binary Tree"
+    static final String name = "BinaryTree"
 
     static final VALID_NEIGHBOURS = ['north', 'east']
 

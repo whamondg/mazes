@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'com.beust:jcommander:1.7'
+    compile 'com.beust:jcommander:1.71'
     compile 'org.codehaus.groovy:groovy-all:2.4.13'
 
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4-rc-3'

@@ -4,11 +4,22 @@ import com.beust.jcommander.Parameter
 
 class Settings {
     Random random = new Random()
-    int randomGridLimit = 15
+    int maxRandomGridSize = 15
+    int minRandomDridSize = 2
 
     @Parameter(names = ["-r", "-rows"], description = "Number of rows to add to the grid")
-    Integer rows = random.nextInt(randomGridLimit)
+    Integer rows = random.nextInt(maxRandomGridSize) + minRandomDridSize
 
     @Parameter(names = ["-c", "-cols"], description = "Number of columns to add to the grid")
-    Integer cols = random.nextInt(randomGridLimit)
+    Integer cols = random.nextInt(maxRandomGridSize) + minRandomDridSize
+
+    @Parameter(names= ["-a", "-algorithm"], description = "The algorithm to use when drawing the maze.  If absent a gallery of mazes will be produced using each algorithm in turn")
+    String algorithm
+
+    @Parameter(names = ["-s", "-start"], description = "Cell position to use as the start of the maze", splitter = CommaSplitter.class)
+    List<Integer> start
+
+    @Parameter(names = ["-e", "-end"], description = "Cell position to use as the end of the maze", splitter = CommaSplitter.class)
+    List<Integer> end
 }
+

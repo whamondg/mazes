@@ -1,38 +1,38 @@
 import com.beust.jcommander.JCommander
+import maze.MazeCreator
 import maze.algorithm.BinaryTreeAlgorithm
 import maze.algorithm.SidewinderAlgorithm
 import maze.cli.Settings
-import maze.grid.DistanceGrid
-import maze.grid.Grid
 
 Settings settings = new Settings();
-new JCommander(settings, args);
+JCommander.newBuilder()
+        .addObject(settings)
+        .build()
+        .parse(args)
 
 def algorithms = [
         new BinaryTreeAlgorithm(),
         new SidewinderAlgorithm()
 ]
 
+def selectedAlgorithm = algorithms.find { it.name == settings.algorithm }
+boolean galleryMode = (!selectedAlgorithm)
+
 println """
-Creating Maze:
+Settings:
+    Given algorithm: ${settings.algorithm}
+    Selected algorithm: ${selectedAlgorithm}
+    GalleryMode: ${galleryMode}
     Dimensions = ${settings.rows} x ${settings.cols}
 """
 
-algorithms.each { drawMaze(it, settings) }
+MazeCreator creator = new MazeCreator()
 
-//println "Distance grid solved with Dijkstra's Algorithm"
-//DistanceGrid distanceGrid = new DistanceGrid(rows,cols)
-//new SidewinderAlgorithm(  ).on(distanceGrid)
-//
-//distanceGrid.start(1,1)
-//println distanceGrid
-//
-//distanceGrid.distances = distanceGrid.distances.pathTo(distanceGrid.cell(distanceGrid.rows,distanceGrid.columns))
-//println distanceGrid
-
-void drawMaze(algorithm, settings) {
-    println "Algorithm: ${algorithm.name}"
-    Grid grid = new Grid( settings.rows, settings.cols )
-    new BinaryTreeAlgorithm().on( grid )
-    println grid
+if (galleryMode) {
+    algorithms.each { algorithm ->
+        println "Algorithm: ${algorithm.name}"
+        creator.drawMaze(algorithm, settings)
+    }
+} else {
+    creator.drawMaze(selectedAlgorithm, settings)
 }
