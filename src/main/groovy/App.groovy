@@ -5,10 +5,16 @@ import maze.algorithm.SidewinderAlgorithm
 import maze.cli.Settings
 
 Settings settings = new Settings();
-JCommander.newBuilder()
+JCommander cliParser = JCommander.newBuilder()
         .addObject(settings)
         .build()
-        .parse(args)
+
+cliParser.parse(args)
+
+if (settings.help) {
+    cliParser.usage()
+    System.exit(0)
+}
 
 def algorithms = [
         new BinaryTreeAlgorithm(),

@@ -7,6 +7,9 @@ class Settings {
     int maxRandomGridSize = 15
     int minRandomDridSize = 2
 
+    @Parameter(names = ["-h", "--help"], help = true)
+    private boolean help
+
     @Parameter(names = ["-r", "-rows"], description = "Number of rows to add to the grid")
     Integer rows = random.nextInt(maxRandomGridSize) + minRandomDridSize
 
@@ -21,5 +24,6 @@ class Settings {
 
     @Parameter(names = ["-e", "-end"], description = "Cell position to use as the end of the maze", splitter = CommaSplitter.class)
     List<Integer> end
+
 }
 
