@@ -7,6 +7,8 @@ import maze.grid.RowVisitor
 
 class SidewinderAlgorithm implements RowVisitor {
     static final String name = "Sidewinder"
+    static final String description = "For each cell randomly link east keeping track of the run.  When not linking east pick a single cell randomly in the run and link it north."
+
     Random random = new Random();
 
     List<Cell> run = []

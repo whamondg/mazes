@@ -1,8 +1,9 @@
 import com.beust.jcommander.JCommander
 import maze.MazeCreator
-import maze.algorithm.BinaryTreeAlgorithm
-import maze.algorithm.SidewinderAlgorithm
+import maze.algorithm.AlgorithmCatalogue
 import maze.cli.Settings
+
+AlgorithmCatalogue algorithms = new AlgorithmCatalogue()
 
 Settings settings = new Settings();
 JCommander cliParser = JCommander.newBuilder()
@@ -13,15 +14,11 @@ cliParser.parse(args)
 
 if (settings.help) {
     cliParser.usage()
+    println algorithms
     System.exit(0)
 }
 
-def algorithms = [
-        new BinaryTreeAlgorithm(),
-        new SidewinderAlgorithm()
-]
-
-def selectedAlgorithm = algorithms.find { it.name == settings.algorithm }
+def selectedAlgorithm = algorithms.find(settings.algorithm)
 boolean galleryMode = (!selectedAlgorithm)
 
 println """
